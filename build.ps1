@@ -1,4 +1,6 @@
-# For AppVeyor CI
+# Intended for AppVeyor CI
+# You may try to use it to build locally,
+# but your milage may vary.
 
 $ErrorActionPreference = 'Stop';
 
@@ -37,9 +39,9 @@ else
   
   Write-Host Building for GNU/Linux...
   
-  apt-get update
-  apt-get install pkg-config libglew-dev libcurl3-openssl-dev libsdl2-dev libsdl2-image-dev libalut-dev xdg-utils libfreetype6-dev libopus-dev libopusfile-dev cmake imagemagick libjpeg-dev libxinerama-dev libxft-dev
-  apt-get upgrade
+  sudo apt-get update
+  sudo apt-get install pkg-config libglew-dev libcurl3-openssl-dev libsdl2-dev libsdl2-image-dev libalut-dev xdg-utils libfreetype6-dev libopus-dev libopusfile-dev cmake imagemagick libjpeg-dev libxinerama-dev libxft-dev
+  sudo apt-get upgrade
   
   mkdir build
   cd build
