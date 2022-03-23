@@ -38,10 +38,9 @@ else
   # Supposedly the binary grabbed from AV doesn't work anyways
   
   Write-Host Building for GNU/Linux...
-  
-  sudo apt-get update -y
+ 
   sudo apt-get install pkg-config libglew-dev libcurl3-openssl-dev libsdl2-dev libsdl2-image-dev libalut-dev xdg-utils libfreetype6-dev libopus-dev libopusfile-dev cmake imagemagick libjpeg-dev libxinerama-dev libxft-dev -y
-  sudo apt-get upgrade -y
+
   
   mkdir build
   cd build
