@@ -81,6 +81,7 @@ DEFINE_SPADES_SETTING(cg_playerNameY, "0");
 
 SPADES_SETTING(p_hurtTint);
 SPADES_SETTING(p_hurtBlood);
+SPADES_SETTING(p_crosshairSet);
 
 namespace spades {
 	namespace client {
@@ -415,7 +416,7 @@ namespace spades {
 
 			if (cg_hitIndicator && hitFeedbackIconState > 0.f && !cg_hideHud) {
 
-                switch (p_crosshairSet)
+                switch (int p_crosshairSet)
                 {
                   case 1:
                   {
