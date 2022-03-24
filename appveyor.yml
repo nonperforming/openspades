@@ -1,7 +1,7 @@
-version: Nightly Build {build} - AppVeyor
+version: CI Build {build} - AppVeyor
 
 pull_requests:
-  do_not_increment_build_number: true
+  do_not_increment_build_number: false
   
 branches:
   only:

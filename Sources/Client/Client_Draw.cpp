@@ -416,7 +416,7 @@ namespace spades {
 
 			if (cg_hitIndicator && hitFeedbackIconState > 0.f && !cg_hideHud) {
 
-                switch (p_crosshairSet)
+                switch (int p_crosshairSet)
                 {
                   case 1:
                   {
