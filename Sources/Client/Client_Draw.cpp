@@ -416,34 +416,37 @@ namespace spades {
 
 			if (cg_hitIndicator && hitFeedbackIconState > 0.f && !cg_hideHud) {
 
+                /*
+		std::string hitmarker;
+		std::string crosshair;
                 switch (p_crosshairSet)
                 {
-                  case 1:
+                  case "1":
                   {
                     // Classic Green
                   }
 
-                  case 2:
+                  case "2":
                   {
                     // Dot
                   }
 
-                  case 3:
+                  case "3":
                   {
                     // Non's Own
                   }
 
-                  case 4:
+                  case "4":
                   {
                     // Non's Own 2
                   }
 
-                  case 5:
+                  case "5":
                   {
                     // Original/OpenSpades crosshair
                   }
 
-                  case 10:
+                  case "10":
                   {
                     // Standard Green
                   }
@@ -461,9 +464,11 @@ namespace spades {
                   default:
                   {
                     // default back to Classic Green
-                  }
+                  } 
                 }
-                Handle<IImage> img = renderer->RegisterImage("Gfx/HitFeedback.png");
+		*/
+
+                Handle<IImage> img = renderer->RegisterImage("Gfx/HitFeedback.png"); // hitmarker
 				Vector2 pos = {scrWidth * .5f, scrHeight * .5f};
 				pos.x -= img->GetWidth() * .5f;
 				pos.y -= img->GetHeight() * .5f;
@@ -483,6 +488,7 @@ namespace spades {
 			}
 
 			// If the player has the intel, display an intel icon
+			// TODO: add variable to hide it
 			IGameMode &mode = *world->GetMode();
 			if (mode.ModeType() == IGameMode::m_CTF) {
 				auto &ctfMode = static_cast<CTFGameMode &>(mode);
