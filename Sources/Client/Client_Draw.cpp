@@ -416,14 +416,10 @@ namespace spades {
 
 			if (cg_hitIndicator && hitFeedbackIconState > 0.f && !cg_hideHud) {
 
-                /*
-		std::string hitmarker;
+		/*std::string hitmarker;
 		std::string crosshair;
                 switch (p_crosshairSet)
                 {
-                  case "1":
-                  {
-                    // Classic Green
                   }
 
                   case "2":
