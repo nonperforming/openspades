@@ -81,7 +81,7 @@ DEFINE_SPADES_SETTING(cg_playerNameY, "0");
 
 SPADES_SETTING(p_hurtTint);
 SPADES_SETTING(p_hurtBlood);
-SPADES_SETTING(p_crosshairSet);
+//SPADES_SETTING(p_crosshairSet);
 
 namespace spades {
 	namespace client {
