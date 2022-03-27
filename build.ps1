@@ -45,14 +45,9 @@ elseif ($isLinux)
   cmake .. -DCMAKE_BUILD_TYPE=MinSizeRel
   make -j 16
 }
-elseif ($isOSX)
+elseif ($isMacOS)
 {
-  # We are currently not building for Mac on AppVeyor
-  
-  # It's kind of a pain anyways,
-  # and most users don't play on Mac,
-  # Developers on Mac usually have experience building on such
-  # Supposedly the binary grabbed from AV doesn't work anyways
+  # MacOS Big Sur
   
   Write-Host Building for MacOS...
   
