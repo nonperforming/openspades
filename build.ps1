@@ -54,11 +54,12 @@ elseif ($isMacOS)
   $RepoRoot = "" + (Get-Location)
   
   brew install pkg-config
+  brew install ninja
   vcpkg/bootstrap-vcpkg.sh -disableMetrics
   vcpkg/vcpkg install "@vcpkg_x86_64-darwin.txt"
   
   cmake -G Ninja .. -D CMAKE_BUILD_TYPE=MinSizeRel -D CMAKE_OSX_ARCHITECTURES=x86_64 -D CMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake -D VCPKG_TARGET_TRIPLET=x64-osx "-S$RepoRoot" "-B$RepoRoot/build"
-  Push-Directory build
+  Push-Location build
   ninja
 }
 else
