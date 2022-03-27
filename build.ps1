@@ -30,6 +30,11 @@ if ($isWindows)
   cmake -A Win32 -D "CMAKE_BUILD_TYPE=MinSizeRel" -D "CMAKE_TOOLCHAIN_FILE=$RepoRoot/vcpkg/scripts/buildsystems/vcpkg.cmake" -D "VCPKG_TARGET_TRIPLET=x86-windows-static" "-S$RepoRoot" "-B$RepoRoot/build"
 
   cmake --build "$RepoRoot/build" --config MinSizeRel --parallel 8
+  
+  Push-Location build
+  Push-Location bin
+  Push-Location MinSizeRel
+  Push-AppveyorArtifact OpenSpades.exe
 }
 elseif ($isLinux)
 {
@@ -44,6 +49,9 @@ elseif ($isLinux)
   
   cmake .. -DCMAKE_BUILD_TYPE=MinSizeRel
   make -j 16
+  
+  cd bin
+  Push-AppveyorArtifact openspades
 }
 elseif ($isMacOS)
 {
@@ -62,6 +70,9 @@ elseif ($isMacOS)
   cmake -G Ninja .. -D CMAKE_BUILD_TYPE=MinSizeRel -D CMAKE_OSX_ARCHITECTURES=x86_64 -D CMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake -D VCPKG_TARGET_TRIPLET=x64-osx "-S$RepoRoot" "-B$RepoRoot/build"
   Push-Location build
   ninja
+  
+  Push-Location bin
+  Push-AppveyorArtifact OpenSpades.app
 }
 else
 {
