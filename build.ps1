@@ -55,6 +55,7 @@ elseif ($isMacOS)
   
   brew install pkg-config
   brew install ninja
+  brew install wget
   vcpkg/bootstrap-vcpkg.sh -disableMetrics
   vcpkg/vcpkg install "@vcpkg_x86_64-darwin.txt"
   
