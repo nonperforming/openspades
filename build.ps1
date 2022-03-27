@@ -31,10 +31,7 @@ if ($isWindows)
 
   cmake --build "$RepoRoot/build" --config MinSizeRel --parallel 8
   
-  Push-Location build
-  Push-Location bin
-  Push-Location MinSizeRel
-  Push-AppveyorArtifact OpenSpades.exe
+  Compress-Archive -path "C:\projects\openspadesplus\openspadesplus\build\bin\MinSizeRel" -DestinationPath "C:\Windows.zip"
 }
 elseif ($isLinux)
 {
@@ -45,13 +42,14 @@ elseif ($isLinux)
   sudo apt-get install pkg-config libglew-dev libcurl3-openssl-dev libsdl2-dev libsdl2-image-dev libalut-dev xdg-utils libfreetype6-dev libopus-dev libopusfile-dev cmake imagemagick libjpeg-dev libxinerama-dev libxft-dev -y
   
   mkdir build
-  cd build
+  Push-Location build
   
   cmake .. -DCMAKE_BUILD_TYPE=MinSizeRel
   make -j 16
   
-  cd bin
-  Push-AppveyorArtifact openspades
+  cp Resources bin
+  zip -1 Linux.zip bin
+  zip -1 Resources.zip Resources
 }
 elseif ($isMacOS)
 {
@@ -61,9 +59,7 @@ elseif ($isMacOS)
   
   $RepoRoot = "" + (Get-Location)
   
-  brew install pkg-config
-  brew install ninja
-  brew install wget
+  brew install pkg-config ninja wget zip
   vcpkg/bootstrap-vcpkg.sh -disableMetrics
   vcpkg/vcpkg install "@vcpkg_x86_64-darwin.txt"
   
@@ -72,6 +68,7 @@ elseif ($isMacOS)
   ninja
   
   Push-Location bin
+  zip -1 MacOS.zip OpenSpades.app
   Push-AppveyorArtifact OpenSpades.app
 }
 else
