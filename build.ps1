@@ -45,6 +45,6 @@ else
   mkdir build
   cd build
   
-  cmake .. -DCMAKE_BUILD_TYPE=MinSizeRel
+  cmake .. -DCMAKE_BUILD_TYPE=Release
   make -j 8
 }
