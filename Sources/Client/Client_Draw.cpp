@@ -81,6 +81,7 @@ DEFINE_SPADES_SETTING(cg_playerNameY, "0");
 
 SPADES_SETTING(p_hurtTint);
 SPADES_SETTING(p_hurtBlood);
+//SPADES_SETTING(p_crosshairSet);
 
 namespace spades {
 	namespace client {
@@ -414,7 +415,56 @@ namespace spades {
 			clientPlayers[playerId]->Draw2D();
 
 			if (cg_hitIndicator && hitFeedbackIconState > 0.f && !cg_hideHud) {
-				Handle<IImage> img = renderer->RegisterImage("Gfx/HitFeedback.png");
+
+		/*std::string hitmarker;
+		std::string crosshair;
+                switch (p_crosshairSet)
+                {
+                  }
+
+                  case "2":
+                  {
+                    // Dot
+                  }
+
+                  case "3":
+                  {
+                    // Non's Own
+                  }
+
+                  case "4":
+                  {
+                    // Non's Own 2
+                  }
+
+                  case "5":
+                  {
+                    // Original/OpenSpades crosshair
+                  }
+
+                  case "10":
+                  {
+                    // Standard Green
+                  }
+
+                  case 11:
+                  {
+                    // Standard White
+                  }
+
+                  case 99:
+                  {
+                    // Voxlap
+                  }
+
+                  default:
+                  {
+                    // default back to Classic Green
+                  } 
+                }
+		*/
+
+                Handle<IImage> img = renderer->RegisterImage("Gfx/HitFeedback.png"); // hitmarker
 				Vector2 pos = {scrWidth * .5f, scrHeight * .5f};
 				pos.x -= img->GetWidth() * .5f;
 				pos.y -= img->GetHeight() * .5f;
@@ -434,6 +484,7 @@ namespace spades {
 			}
 
 			// If the player has the intel, display an intel icon
+			// TODO: add variable to hide it
 			IGameMode &mode = *world->GetMode();
 			if (mode.ModeType() == IGameMode::m_CTF) {
 				auto &ctfMode = static_cast<CTFGameMode &>(mode);

@@ -31,7 +31,6 @@
 
 #include "CTFGameMode.h"
 #include "GameMap.h"
-#include "GameProperties.h"
 #include "IGameMode.h"
 #include "TCGameMode.h"
 #include "World.h"
