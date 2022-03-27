@@ -455,7 +455,6 @@ namespace spades {
 			void GrenadeDestroyedBlock(IntVector3);
 			void PlayerLeaving(Player &);
 			void PlayerJoinedTeam(Player &);
-			void PlayerSpawned(Player &);
 
 			// IWorldListener begin
 			void PlayerObjectSet(int) override;
