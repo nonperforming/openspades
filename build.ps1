@@ -29,7 +29,7 @@ if ($isWindows)
 
   cmake -A Win32 -D "CMAKE_BUILD_TYPE=MinSizeRel" -D "CMAKE_TOOLCHAIN_FILE=$RepoRoot/vcpkg/scripts/buildsystems/vcpkg.cmake" -D "VCPKG_TARGET_TRIPLET=x86-windows-static" "-S$RepoRoot" "-B$RepoRoot/build"
 
-  cmake --build "$RepoRoot/build" --config MinSizeRel --parallel 8
+  cmake --build "$RepoRoot/build" --config MinSizeRel --parallel 16
   
   Compress-Archive -path "C:\projects\openspadesplus\openspadesplus\build\bin\MinSizeRel" -DestinationPath "C:\Windows.zip"
 }
@@ -48,8 +48,8 @@ elseif ($isLinux)
   make -j 16
   
   cp Resources bin
-  zip -1 Linux.zip bin
-  zip -1 Resources.zip Resources
+  zip -1 -r Linux.zip bin
+  zip -1 -r Resources.zip Resources
 }
 elseif ($isMacOS)
 {
@@ -59,7 +59,7 @@ elseif ($isMacOS)
   
   $RepoRoot = "" + (Get-Location)
   
-  brew install pkg-config ninja wget zip
+  brew install ninja wget
   vcpkg/bootstrap-vcpkg.sh -disableMetrics
   vcpkg/vcpkg install "@vcpkg_x86_64-darwin.txt"
   
@@ -68,8 +68,7 @@ elseif ($isMacOS)
   ninja
   
   Push-Location bin
-  zip -1 MacOS.zip OpenSpades.app
-  Push-AppveyorArtifact OpenSpades.app
+  zip -1 -r MacOS.zip OpenSpades.app
 }
 else
 {
