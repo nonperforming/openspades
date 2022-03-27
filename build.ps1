@@ -15,7 +15,7 @@ if ($isWindows)
   # Based off of https://github.com/Conticop/OpenSpades-assets/blob/main/build-openspades.ps1
   
   $RepoRoot = "" + (Get-Location)
-  $BinaryDir = Join-Path "$RepoRoot" build bin MinSizeRel
+  Write-Host Repository root: $RepoRoot
 
   vcpkg/bootstrap-vcpkg.bat -disableMetrics
 
@@ -24,8 +24,6 @@ if ($isWindows)
   cmake -A Win32 -D "CMAKE_BUILD_TYPE=MinSizeRel" -D "CMAKE_TOOLCHAIN_FILE=$RepoRoot/vcpkg/scripts/buildsystems/vcpkg.cmake" -D "VCPKG_TARGET_TRIPLET=x86-windows-static" "-S$RepoRoot" "-B$RepoRoot/build"
 
   cmake --build "$RepoRoot/build" --config MinSizeRel --parallel 8
-
-  Push-Location -Path "$BinaryDir"
 }
 else
 {
