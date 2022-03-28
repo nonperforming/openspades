@@ -161,7 +161,7 @@ enet_protocol_notify_disconnect (ENetHost * host, ENetPeer * peer, ENetEvent * e
 static void
 enet_protocol_remove_sent_unreliable_commands (ENetPeer * peer)
 {
-    ENetOutgoingCommand * outgoingCommand = NULL;
+    ENetOutgoingCommand * outgoingCommand;
 
     if (enet_list_empty (& peer -> sentUnreliableCommands))
       return;
@@ -489,13 +489,13 @@ enet_protocol_handle_send_unsequenced (ENetHost * host, ENetPeer * peer, const E
         memset (peer -> unsequencedWindow, 0, sizeof (peer -> unsequencedWindow));
     }
     else
-    if (peer -> unsequencedWindow [index / 32] & (1u << (index % 32)))
+    if (peer -> unsequencedWindow [index / 32] & (1 << (index % 32)))
       return 0;
       
     if (enet_peer_queue_incoming_command (peer, command, (const enet_uint8 *) command + sizeof (ENetProtocolSendUnsequenced), dataLength, ENET_PACKET_FLAG_UNSEQUENCED, 0) == NULL)
       return -1;
    
-    peer -> unsequencedWindow [index / 32] |= 1u << (index % 32);
+    peer -> unsequencedWindow [index / 32] |= 1 << (index % 32);
  
     return 0;
 }
@@ -618,7 +618,7 @@ enet_protocol_handle_send_fragment (ENetHost * host, ENetPeer * peer, const ENet
        startCommand -> fragments [fragmentNumber / 32] |= (1 << (fragmentNumber % 32));
 
        if (fragmentOffset + fragmentLength > startCommand -> packet -> dataLength)
-         fragmentLength = (enet_uint32) startCommand -> packet -> dataLength - fragmentOffset;
+         fragmentLength = startCommand -> packet -> dataLength - fragmentOffset;
 
        memcpy (startCommand -> packet -> data + fragmentOffset,
                (enet_uint8 *) command + sizeof (ENetProtocolSendFragment),
@@ -736,7 +736,7 @@ enet_protocol_handle_send_unreliable_fragment (ENetHost * host, ENetPeer * peer,
        startCommand -> fragments [fragmentNumber / 32] |= (1 << (fragmentNumber % 32));
 
        if (fragmentOffset + fragmentLength > startCommand -> packet -> dataLength)
-         fragmentLength = (enet_uint32) startCommand -> packet -> dataLength - fragmentOffset;
+         fragmentLength = startCommand -> packet -> dataLength - fragmentOffset;
 
        memcpy (startCommand -> packet -> data + fragmentOffset,
                (enet_uint8 *) command + sizeof (ENetProtocolSendFragment),
