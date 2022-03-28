@@ -31,7 +31,7 @@ if ($isWindows)
 
   cmake --build "$RepoRoot/build" --config MinSizeRel --parallel 16
   
-  Compress-Archive -path "C:\projects\openspadesplus\openspadesplus\build\bin\MinSizeRel" -DestinationPath "C:\Windows.zip"
+  7z a Windows.zip build/bin/MinSizeRel -r
 }
 elseif ($isLinux)
 {
@@ -48,8 +48,9 @@ elseif ($isLinux)
   make -j 16
   
   cp Resources bin
-  zip -1 -r Linux.zip bin
-  zip -1 -r Resources.zip Resources
+  
+  7z a Linux.zip bin -r
+  7z a Linux.zip Resources -r
 }
 elseif ($isMacOS)
 {
@@ -67,8 +68,7 @@ elseif ($isMacOS)
   Push-Location build
   ninja
   
-  Push-Location bin
-  zip -1 -r MacOS.zip OpenSpades.app
+  7z a MacOS.zip bin/OpenSpades.app -r
 }
 else
 {
