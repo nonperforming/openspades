@@ -20,16 +20,15 @@
 #include "GameProperties.h"
 #include <Core/Debug.h>
 
-namespace spades {
-	namespace client {
-		void GameProperties::HandleServerMessage(const std::string &msg) {
-			if (!useHeuristics) {
+namespace spades 
+{
+	namespace client 
+  {
+		void GameProperties::HandleServerMessage(const std::string &msg)
+    {
+			if (!useHeuristics)
+      {
 				return;
-			}
-
-			if (msg == "Game mode: Arena by Yourself") {
-				clearCorpseOnRespawn = true;
-				SPLog("Enabled clearCorpseOnRespawn based on a server message heuristics");
 			}
 		}
 	} // namespace client

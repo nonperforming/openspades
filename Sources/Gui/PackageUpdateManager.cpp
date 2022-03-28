@@ -34,7 +34,7 @@
 #include <Core/Thread.h>
 #include <OpenSpades.h>
 
-DEFINE_SPADES_SETTING(cl_checkForUpdates, "0");
+DEFINE_SPADES_SETTING(cl_checkForUpdates, "1");
 
 namespace spades {
 	namespace {
@@ -140,6 +140,14 @@ namespace spades {
 					    }));
 					curl_easy_setopt(curl.get(), CURLOPT_WRITEDATA, &responseBuffer);
 					curl_easy_setopt(curl.get(), CURLOPT_USERAGENT, OpenSpades_VER_STR);
+					curl_easy_setopt(curl.get(), CURLOPT_NOPROGRESS, 0);
+					curl_easy_setopt(
+					  curl.get(), CURLOPT_XFERINFOFUNCTION,
+					  static_cast<int (*)(void *, curl_off_t, curl_off_t, curl_off_t, curl_off_t)>(
+					    [](void *, curl_off_t total, curl_off_t downloaded, curl_off_t, curl_off_t) -> int {
+					    SPLog("Downloaded %zd bytes/%zd bytes", downloaded, total);
+					    return 0;
+					  }));
 
 					m_parent.SetupCURLRequest(curl.get());
 

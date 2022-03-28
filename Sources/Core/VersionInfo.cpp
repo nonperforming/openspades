@@ -27,24 +27,16 @@ std::string VersionInfo::GetVersionInfo() {
 	buffer = "Mac OS";
 
 #elif defined(OS_PLATFORM_WINDOWS)
-	if (IsWindowsXPOrGreater() && !IsWindowsSP1OrGreater()) {
-		buffer = "Windows XP";
-	} else if (IsWindowsXPSP1OrGreater() && !IsWindowsXPSP2OrGreater()) {
-		buffer = "Windows XP Service Pack 1";
-	} else if (IsWindowsXPSP2OrGreater() && !IsWindowsXPSP3OrGreater()) {
-		buffer = "Windows XP Service Pack 2";
-	} else if (IsWindowsXPSP3OrGreater() && !IsWindowsVistaOrGreater()) {
-		buffer = "Windows XP Service Pack 3";
-	} else if (IsWindowsVistaOrGreater() && !IsWindowsVistaSP1OrGreater()) {
+	if (IsWindowsVistaOrGreater() && !IsWindowsVistaSP1OrGreater()) {
 		buffer = "Windows Vista";
 	} else if (IsWindowsVistaSP1OrGreater() && !IsWindowsVistaSP2OrGreater()){
-		buffer = "Windows Vista Service Pack 1"
+		buffer = "Windows Vista Service Pack 1";
 	} else if (IsWindowsVistaSP2OrGreater() && !IsWindows7OrGreater()) {
-		buffer = "Windows Vista Service Pack 2"
+		buffer = "Windows Vista Service Pack 2";
 	} else if (IsWindows7OrGreater() && !IsWindows7SP1OrGreater()) {
 		buffer = "Windows 7";
 	} else if (IsWindows7SP1OrGreater() && !IsWindows8OrGreater()) {
-		buffer = "Windows 7 Service Pack 1"
+		buffer = "Windows 7 Service Pack 1";
 	} else if (IsWindows8OrGreater() && !IsWindows8Point1OrGreater()) {
 		buffer = "Windows 8";
 	} else if (IsWindows8Point1OrGreater() && !IsWindows10OrGreater()) {
@@ -60,10 +52,10 @@ std::string VersionInfo::GetVersionInfo() {
 	return buffer;
 #elif defined(__FreeBSD__)
 	buffer = "FreeBSD";
-#elif defined(__DragonFly__)
-	buffer = "DragonFly BSD";
 #elif defined(__OpenBSD__)
 	buffer = "OpenBSD";
+#elif defined(__DragonFly__)
+	buffer = "DragonFly BSD";
 #elif defined(__NetBSD__)
 	buffer = "NetBSD";
 #elif defined(__HAIKU__)
@@ -74,6 +66,16 @@ std::string VersionInfo::GetVersionInfo() {
 
 	buffer += " | OpenSpades+ Revision ";
 	buffer += std::to_string(spades::plus::revision);
+
+	if (p_showCustomClientMessage)
+	{
+		std::string message = p_customClientMessage;
+		
+		buffer += " | ";
+		buffer += message;
+	}
+
+	return std::string(buffer);
 
 	if (p_showCustomClientMessage)
 	{

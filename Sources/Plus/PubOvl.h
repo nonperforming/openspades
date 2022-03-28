@@ -13,30 +13,15 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with OpenSpades+. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include "OpenSpadesPlus.h"
-#include <iostream>
-#include <Core/Settings.h>
-
-DEFINE_SPADES_SETTING(p_viewmodel, "0");
-DEFINE_SPADES_SETTING(p_showCustomClientMessage, "0");
-DEFINE_SPADES_SETTING(p_customClientMessage, "");
-DEFINE_SPADES_SETTING(p_showIP, "1");
-DEFINE_SPADES_SETTING(p_showAccuracyInStats, "1");
-DEFINE_SPADES_SETTING(p_showAccuracyUnderMap, "0");
-DEFINE_SPADES_SETTING(p_streamer, "0");
-DEFINE_SPADES_SETTING(p_corpse, "0");
-
-DEFINE_SPADES_SETTING(p_hurtTint, "1");
-DEFINE_SPADES_SETTING(p_hurtBlood, "0");
+#pragma once
 
 namespace spades {
-	namespace plus {
-    		const int revision = 10;
+	namespace pubovl {
 	} // namespace client
 } // namespace spades

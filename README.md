@@ -1,20 +1,22 @@
 # OpenSpades+
-# Revision 9
+# Revision 10
 
-[![Build status](https://ci.appveyor.com/api/projects/status/gasnapxykby565ng?svg=true)](https://ci.appveyor.com/project/nonperforming/openspadesplus)
+[![AppVeyor](https://img.shields.io/appveyor/build/nonperforming/openspadesplus?style=flat-square&logo=appveyor&cacheSeconds=60)](https://ci.appveyor.com/project/nonperforming/openspadesplus)
+[![Latest](https://img.shields.io/github/v/release/nonperforming/openspadesplus?style=flat-square&cacheSeconds=600)](https://github.com/nonperforming/openspadesplus/releases)
+[![License](https://img.shields.io/github/license/nonperforming/openspadesplus?style=flat-square&cacheSeconds=86400)](https://github.com/nonperforming/openspadesplus/blob/main/LICENSE)
 
 [PLEASE READ THE ENTIRE README.md FILE BEFORE USING](https://github.com/nonperforming/openspadesplus#important)
 ## What is this?
 OpenSpades+ is a modification of [OpenSpades](https://github.com/yvt/openspades) that has many competivive-sided tweaks such as
 
-* The default settings falling more towards competitive play
+* The [default settings](https://github.com/nonperforming/openspadesplus/blob/main/info/diff.md) falling more towards competitive play
 * No FOV cap
 * No falling blocks hindering visibility and possibly causing lag spikes
 * A crosshair more akin to classic FPS games such as CS:GO (seven to pick from currently, feel free to open a PR to add more!)
 * No ragdolls or corpses whatsoever
 * Hiding the view-model for extra screen space
-* (NYI) A streamer mode (disable global chat, Hide IP in stats, sanitize player names)
-* (NYI) Show player weapons on the scoreboard if the server allows it
+* A streamer mode (disable global chat, Hide IP in stats, sanitize player names) (TODO)
+* Show player weapons on the scoreboard if the server allows it (TODO)
 
 It also has some other features, though not as major
 
@@ -28,6 +30,12 @@ It also has some other features, though not as major
 * Allow ghosts to use the flashlight (bugged currently while in freecam)
 * A custom map background (two currently, feel free to open a PR to add more!)
 * Encouraging words on the pause menu! (I swear it's not cheating)
+
+This project also aims to be in line with OpenSpades [NotToDo](https://github.com/yvt/openspades/wiki/NotToDo) where applicable - i.e.
+* Show weapons on the leaderboard if the server has /weapon enabled (TODO)
+  * Check if you can only see friendly team's weapons
+* Show player health on mouse-over and scoreboard when server has /hp or /health enabled (TODO)
+  * Check if you can only see friendly team HP
 
 ## But what if I want the viewmodel or the default crosshair?
 No problem! Almost all the changes here are implemented in such a way so that toggling a variable i.e toggling `p_viewmodel` will turn on or off the change, sometimes with a relaunch. For crosshairs, if you want the default crosshair back but keep all the other changes, you just copy the contents of `Resources/Gfx/Crosshairs/Default` into `Resources/Gfx` for the default crosshair.
@@ -45,7 +53,7 @@ Most, if not all of these variables should be under the Options/Preferences menu
 ### cg_particles
 Default: 0
 
-As simple as it gets. Turn particles on or off along with some extra settings. This can and will hide grenade particles, which may be useful in case you missed the flash.
+As simple as it gets. Turn particles on or off along with some extra settings. This can and will hide grenade particles, which may be useful. THIS DOES NOT HIDE TRACERS
 
 ### cg_ragdoll
 Default: 0
@@ -100,7 +108,7 @@ This is the default for a reason. It is self explanatory.
 ### cg_tracersFirstPerson
 Default: 0
 
-Remove the bright yellow tracers that are shot by you, the player. Other players' tracers won't be affected.
+Remove the bright yellow tracers that are shot by you, the player. Other players' tracers won't be affected. Note that this also affects the minimap.
 
 ### cg_skipDeadPlayersWhenDead
 Default: 0
@@ -169,7 +177,7 @@ Default: 0
 
 ## Other
 ### !!IMPORTANT!!
-Save files and game files are kept seperate from OpenSpades. This does not include mod `.pak`s or folders, though it is planned for OpenSpades+ to load mods from the folder `OSMods` instead which allows you to have OpenSpades+ specific mods. It is nigh impossible that OpenSpades+ will bork or even modify an OpenSpades install in any way. To use your OpenSpades config file as a template/your config file for OpenSpades+, you can copy your `SPConfig.cfg` over to `OSPlus.cfg` in the same folder. Please notice that OpenSpades+ uses different default options which you may find helpful. You can always set them manually however, see ["Useful console variables"](https://github.com/nonperforming/openspadesplus#useful-console-variables)
+Save files and game files are kept seperate from OpenSpades. This does not include mod `.pak`s or folders, though it is planned for OpenSpades+ to load mods from the folder `OSMods` instead which allows you to have OpenSpades+ specific mods. It is nigh impossible that OpenSpades+ will bork or even modify an OpenSpades install in any way. To use your OpenSpades config file as a template/your config file for OpenSpades+, you can copy your `SPConfig.cfg` over to `OSPlus.cfg` in the same folder. Please notice that OpenSpades+ uses different default options which you may find helpful. You can always set them manually however, see ["Useful console variables"](https://github.com/nonperforming/openspadesplus#useful-console-variables). There is a list of differences between OpenSpades+ and OpenSpades settings [here](https://github.com/nonperforming/openspadesplus/blob/main/info/diff.md)
 
 ### To-do:
 Remove ragdolls and corpses cleaner code

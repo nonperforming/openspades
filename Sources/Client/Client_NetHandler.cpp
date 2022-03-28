@@ -31,7 +31,6 @@
 
 #include "CTFGameMode.h"
 #include "GameMap.h"
-#include "GameProperties.h"
 #include "IGameMode.h"
 #include "TCGameMode.h"
 #include "World.h"
@@ -290,12 +289,6 @@ namespace spades {
 				NetLog("%s", msg.c_str());
 				scriptedUI->RecordChatLog(
 				  msg, MakeVector4(col.x / 255.f, col.y / 255.f, col.z / 255.f, 0.8f));
-			}
-		}
-
-		void Client::PlayerSpawned(Player &p) {
-			if (net->GetGameProperties()->clearCorpseOnRespawn) {
-				RemoveCorpseForPlayer(p.GetId());
 			}
 		}
 

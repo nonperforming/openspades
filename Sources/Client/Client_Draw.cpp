@@ -81,6 +81,7 @@ DEFINE_SPADES_SETTING(cg_playerNameY, "0");
 
 SPADES_SETTING(p_hurtTint);
 SPADES_SETTING(p_hurtBlood);
+//SPADES_SETTING(p_crosshairSet);
 
 namespace spades {
 	namespace client {
@@ -414,7 +415,56 @@ namespace spades {
 			clientPlayers[playerId]->Draw2D();
 
 			if (cg_hitIndicator && hitFeedbackIconState > 0.f && !cg_hideHud) {
-				Handle<IImage> img = renderer->RegisterImage("Gfx/HitFeedback.png");
+
+		/*std::string hitmarker;
+		std::string crosshair;
+                switch (p_crosshairSet)
+                {
+                  }
+
+                  case "2":
+                  {
+                    // Dot
+                  }
+
+                  case "3":
+                  {
+                    // Non's Own
+                  }
+
+                  case "4":
+                  {
+                    // Non's Own 2
+                  }
+
+                  case "5":
+                  {
+                    // Original/OpenSpades crosshair
+                  }
+
+                  case "10":
+                  {
+                    // Standard Green
+                  }
+
+                  case 11:
+                  {
+                    // Standard White
+                  }
+
+                  case 99:
+                  {
+                    // Voxlap
+                  }
+
+                  default:
+                  {
+                    // default back to Classic Green
+                  } 
+                }
+		*/
+
+                Handle<IImage> img = renderer->RegisterImage("Gfx/HitFeedback.png"); // hitmarker
 				Vector2 pos = {scrWidth * .5f, scrHeight * .5f};
 				pos.x -= img->GetWidth() * .5f;
 				pos.y -= img->GetHeight() * .5f;
@@ -434,6 +484,7 @@ namespace spades {
 			}
 
 			// If the player has the intel, display an intel icon
+			// TODO: add variable to hide it
 			IGameMode &mode = *world->GetMode();
 			if (mode.ModeType() == IGameMode::m_CTF) {
 				auto &ctfMode = static_cast<CTFGameMode &>(mode);
@@ -471,55 +522,19 @@ namespace spades {
 				// (Note: this cannot be displayed for a spectated player --- the server
 				//        does not submit sufficient information)
 				Weapon &weap = p.GetWeapon();
-				Handle<IImage> ammoIcon;
-				float iconWidth, iconHeight;
-				float spacing = 2.f;
 				int stockNum;
 				int warnLevel;
 
 				if (p.IsToolWeapon()) {
-					switch (weap.GetWeaponType()) {
-						case RIFLE_WEAPON:
-							ammoIcon = renderer->RegisterImage("Gfx/Bullet/7.62mm.png");
-							iconWidth = 6.f;
-							iconHeight = iconWidth * 4.f;
-							break;
-						case SMG_WEAPON:
-							ammoIcon = renderer->RegisterImage("Gfx/Bullet/9mm.png");
-							iconWidth = 4.f;
-							iconHeight = iconWidth * 4.f;
-							break;
-						case SHOTGUN_WEAPON:
-							ammoIcon = renderer->RegisterImage("Gfx/Bullet/12gauge.png");
-							iconWidth = 30.f;
-							iconHeight = iconWidth / 4.f;
-							spacing = -6.f;
-							break;
-						default: SPInvalidEnum("weap->GetWeaponType()", weap.GetWeaponType());
-					}
 
 					int clipSize = weap.GetClipSize();
 					int clip = weap.GetAmmo();
 
 					clipSize = std::max(clipSize, clip);
 
-					for (int i = 0; i < clipSize; i++) {
-						float x = scrWidth - 16.f - (float)(i + 1) * (iconWidth + spacing);
-						float y = scrHeight - 16.f - iconHeight;
-
-						if (clip >= i + 1) {
-							renderer->SetColorAlphaPremultiplied(MakeVector4(1, 1, 1, 1));
-						} else {
-							renderer->SetColorAlphaPremultiplied(MakeVector4(0.4, 0.4, 0.4, 1));
-						}
-
-						//renderer->DrawImage(ammoIcon, AABB2(x, y, iconWidth, iconHeight));
-					}
-
 					stockNum = weap.GetStock();
 					warnLevel = weap.GetMaxStock() / 3;
 				} else {
-					iconHeight = 0.f;
 					warnLevel = 0;
 
 					switch (p.GetTool()) {
@@ -529,8 +544,6 @@ namespace spades {
 						default: SPInvalidEnum("p->GetTool()", p.GetTool());
 					}
 				}
-
-				
 
 				Vector4 numberColor = {1, 1, 1, 1};
 
