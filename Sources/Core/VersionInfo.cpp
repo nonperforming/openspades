@@ -58,6 +58,8 @@ std::string VersionInfo::GetVersionInfo() {
 	buffer = "DragonFly BSD";
 #elif defined(__NetBSD__)
 	buffer = "NetBSD";
+#elif defined(__sun)
+	buffer = "Solaris / Illumos";
 #elif defined(__HAIKU__)
 	buffer = "Haiku OS";
 #else
