@@ -150,47 +150,51 @@ namespace spades {
 
 		void PaletteView::Update() {}
 
-		void PaletteView::Draw() {
-			Handle<IImage> img = renderer.RegisterImage("Gfx/Palette.png");
+		void PaletteView::Draw() 
+		{
+			if (!p_hidePalette)
+			{
+				Handle<IImage> img = renderer.RegisterImage("Gfx/Palette.png");
 
-			int sel = GetSelectedIndex();
+				int sel = GetSelectedIndex();
 
-			float scrW = renderer.ScreenWidth();
-			float scrH = renderer.ScreenHeight();
+				float scrW = renderer.ScreenWidth();
+				float scrH = renderer.ScreenHeight();
 
-			for (size_t phase = 0; phase < 2; phase++) {
-				for (size_t i = 0; i < colors.size(); i++) {
-					if ((sel == i) != (phase == 1))
-						continue;
+				for (size_t phase = 0; phase < 2; phase++) {
+					for (size_t i = 0; i < colors.size(); i++) {
+						if ((sel == i) != (phase == 1))
+							continue;
 
-					int row = static_cast<int>(i / 8);
-					int col = static_cast<int>(i % 8);
+						int row = static_cast<int>(i / 8);
+						int col = static_cast<int>(i % 8);
 
-					bool selected = sel == i;
+						bool selected = sel == i;
 
-					// draw color
-					IntVector3 icol = colors[i];
-					Vector4 cl;
-					cl.x = icol.x / 255.f;
-					cl.y = icol.y / 255.f;
-					cl.z = icol.z / 255.f;
-					cl.w = 1.f;
+						// draw color
+						IntVector3 icol = colors[i];
+						Vector4 cl;
+						cl.x = icol.x / 255.f;
+						cl.y = icol.y / 255.f;
+						cl.z = icol.z / 255.f;
+						cl.w = 1.f;
 
-					float x = scrW - 100.f + 10.f * col;
-					float y = scrH - 106.f + 10.f * row - 40.f;
+						float x = scrW - 100.f + 10.f * col;
+						float y = scrH - 106.f + 10.f * row - 40.f;
 
-					renderer.SetColorAlphaPremultiplied(cl);
-					if (selected) {
-						renderer.DrawImage(img, MakeVector2(x, y), AABB2(0, 16, 16, 16));
-					} else {
-						renderer.DrawImage(img, MakeVector2(x, y), AABB2(0, 0, 16, 16));
-					}
+						renderer.SetColorAlphaPremultiplied(cl);
+						if (selected) {
+							renderer.DrawImage(img, MakeVector2(x, y), AABB2(0, 16, 16, 16));
+						} else {
+							renderer.DrawImage(img, MakeVector2(x, y), AABB2(0, 0, 16, 16));
+						}
 
-					renderer.SetColorAlphaPremultiplied(MakeVector4(1, 1, 1, 1));
-					if (selected) {
-						renderer.DrawImage(img, MakeVector2(x, y), AABB2(16, 16, 16, 16));
-					} else {
-						renderer.DrawImage(img, MakeVector2(x, y), AABB2(16, 0, 16, 16));
+						renderer.SetColorAlphaPremultiplied(MakeVector4(1, 1, 1, 1));
+						if (selected) {
+							renderer.DrawImage(img, MakeVector2(x, y), AABB2(16, 16, 16, 16));
+						} else {
+							renderer.DrawImage(img, MakeVector2(x, y), AABB2(16, 0, 16, 16));
+						}
 					}
 				}
 			}
