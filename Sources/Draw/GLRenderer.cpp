@@ -51,6 +51,7 @@
 #include "GLProgramUniform.h"
 #include "GLRadiosityRenderer.h"
 #include "GLRenderer.h"
+#include "GLResampleBicubicFilter.h"
 #include "GLSSAOFilter.h"
 #include "GLSettings.h"
 #include "GLShadowMapShader.h"
@@ -68,12 +69,6 @@
 #include <Core/Exception.h>
 #include <Core/Settings.h>
 #include <Core/Stopwatch.h>
-
-#include "../Client/Client.h"
-#include "../Imports/OpenGL.h"
-
-SPADES_SETTING(po_xray);
-SPADES_SETTING(po_xrayStrength);
 
 namespace spades {
 	namespace draw {
@@ -395,8 +390,7 @@ namespace spades {
 		}
 
 		Vector3 GLRenderer::GetFogColorForSolidPass() {
-			if (settings.r_fogShadow && mapShadowRenderer &&
-			    !client::Client::WallhackActive()) {
+			if (settings.r_fogShadow && mapShadowRenderer) {
 				return MakeVector3(0, 0, 0);
 			} else {
 				return GetFogColor();
@@ -486,10 +480,6 @@ namespace spades {
 			sceneUsedInThisFrame = true;
 			duringSceneRendering = true;
 
-			if (mapRenderer) {
-				mapRenderer->UpdateTextureMode();
-			}
-
 			profiler->BeginFrame();
 
 			// clear scene objects
@@ -506,34 +496,6 @@ namespace spades {
 			BuildFrustrum();
 
 			projectionViewMatrix = projectionMatrix * viewMatrix;
-
-			{
-				const auto near = sceneDef.zNear;
-				const auto far = 3000.0f; // This seems to cover the whole map.
-
-				const auto t = near * tanf(sceneDef.fovY * .5f);
-				const auto r = near * tanf(sceneDef.fovX * .5f);
-				const auto a = r * 2.f, b = t * 2.f, c = far - near;
-				Matrix4 mat;
-				mat.m[0] = near * 2.f / a;
-				mat.m[1] = 0.f;
-				mat.m[2] = 0.f;
-				mat.m[3] = 0.f;
-				mat.m[4] = 0.f;
-				mat.m[5] = near * 2.f / b;
-				mat.m[6] = 0.f;
-				mat.m[7] = 0.f;
-				mat.m[8] = 0.f;
-				mat.m[9] = 0.f;
-				mat.m[10] = -(far + near) / c;
-				mat.m[11] = -1.f;
-				mat.m[12] = 0.f;
-				mat.m[13] = 0.f;
-				mat.m[14] = -(far * near * 2.f) / c;
-				mat.m[15] = 0.f;
-
-				farProjectionViewMatrix = mat * viewMatrix;
-			}
 
 			if (settings.r_srgb)
 				device->Enable(IGLDevice::FramebufferSRGB, true);
@@ -649,7 +611,7 @@ namespace spades {
 			device->EnableVertexAttribArray(colorAttribute(), false);
 		}
 
-		void GLRenderer::RenderObjects(bool reflections) {
+		void GLRenderer::RenderObjects() {
 
 			// draw opaque objects, and do dynamic lighting
 
@@ -729,32 +691,6 @@ namespace spades {
 				modelRenderer->RenderDynamicLightPass(lights);
 			}
 
-			if (cg_outlines && !reflections) {
-				GLProfiler::Context p(*profiler, "Outlines Pass");
-
-				device->Enable(IGLDevice::Blend, false);
-				device->Enable(IGLDevice::DepthTest, true);
-				device->Enable(IGLDevice::CullFace, true);
-				device->DepthFunc(IGLDevice::LessOrEqual);
-
-				glCullFace(GL_FRONT);
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-				glEnable(GL_POLYGON_OFFSET_LINE);
-				glPolygonOffset(1, 1);
-				glLineWidth((int)cg_outlineStrength);
-
-				if (!sceneDef.skipWorld && mapRenderer) {
-					mapRenderer->RenderOutlinesPass(Vector3(0, 0, 0));
-				}
-				modelRenderer->RenderOutlinesPass();
-
-				glLineWidth(1);
-				glCullFace(GL_BACK);
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				glPolygonOffset(0, 0);
-				glDisable(GL_POLYGON_OFFSET_LINE);
-			}
-
 			{
 				GLProfiler::Context p(*profiler, "Debug Line");
 				device->Enable(IGLDevice::Blend, false);
@@ -809,8 +745,7 @@ namespace spades {
 
 			{
 				GLProfiler::Context p(*profiler, "Upload Dynamic Data");
-				if (mapShadowRenderer &&
-				    !client::Client::WallhackActive()) {
+				if (mapShadowRenderer) {
 					mapShadowRenderer->Update();
 				}
 				if (ambientShadowRenderer) {
@@ -832,8 +767,7 @@ namespace spades {
 				GLProfiler::Context p(*profiler, "Shadow Map Pass");
 				device->Enable(IGLDevice::DepthTest, true);
 				device->DepthFunc(IGLDevice::Less);
-				if (shadowMapRenderer &&
-				    !client::Client::WallhackActive())
+				if (shadowMapRenderer)
 					shadowMapRenderer->Render();
 			}
 
@@ -847,8 +781,7 @@ namespace spades {
 			device->ClearDepth(1.f);
 			device->DepthRange(0.f, 1.f);
 
-			if ((int)settings.r_water >= 2 &&
-			    !client::Client::WallhackActive()) {
+			if ((int)settings.r_water >= 2) {
 				// for Water 2 (r_water >= 2), we need to render
 				// reflection
 				try {
@@ -886,7 +819,7 @@ namespace spades {
 
 					// render scene
 					GLProfiler::Context p(*profiler, "Mirrored Objects");
-					RenderObjects(true);
+					RenderObjects();
 
 					// restore matrices
 					std::swap(view, viewMatrix);
@@ -935,111 +868,13 @@ namespace spades {
 
 			device->FrontFace(IGLDevice::CW);
 
-			bool visiblePlayers[32];
-
-			if (!client::Client::WallhackActive()) {
+			{
 				GLProfiler::Context p(*profiler, "Non-mirrored Objects");
-				RenderObjects(false);
-			} else {
-				device->Enable(IGLDevice::DepthTest, true);
-				device->Enable(IGLDevice::Texture2D, true);
-				device->Enable(IGLDevice::Blend, false);
-
-				bool needsDepthPrepass = settings.r_depthPrepass || settings.r_ssao;
-				bool needsFullDepthPrepass = settings.r_ssao;
-
-				GLFramebufferManager::BufferHandle ssaoBuffer;
-
-				if (needsDepthPrepass) {
-					{
-						GLProfiler::Context p(*profiler, "Depth-only Prepass");
-						device->DepthFunc(IGLDevice::Less);
-						if (!sceneDef.skipWorld && mapRenderer) {
-							mapRenderer->Prerender();
-						}
-						if (needsFullDepthPrepass) {
-							modelRenderer->Prerender(false);
-						}
-					}
-
-					if (settings.r_ssao) {
-						{
-							GLProfiler::Context p(*profiler, "Screen Space Ambient Occlusion");
-							device->DepthMask(false);
-							device->Enable(IGLDevice::DepthTest, false);
-							device->Enable(IGLDevice::CullFace, false);
-
-							ssaoBuffer = GLSSAOFilter(this).Filter();
-							ssaoBufferTexture = ssaoBuffer.GetTexture();
-
-							device->BindTexture(IGLDevice::Texture2D, ssaoBufferTexture);
-							device->TexParamater(IGLDevice::Texture2D, IGLDevice::TextureMagFilter,
-							                     IGLDevice::Nearest);
-							device->TexParamater(IGLDevice::Texture2D, IGLDevice::TextureMinFilter,
-							                     IGLDevice::Nearest);
-
-							device->Enable(IGLDevice::CullFace, true);
-						}
-						GetFramebufferManager()->PrepareSceneRendering();
-					}
-				}
-				{
-					GLProfiler::Context p(*profiler, "Sunlight Pass");
-
-					device->DepthFunc(IGLDevice::LessOrEqual);
-					if (!sceneDef.skipWorld && mapRenderer) {
-						mapRenderer->RenderSunlightPass();
-					}
-					modelRenderer->RenderSunlightPass(false);
-				}
-				if (settings.r_ssao) {
-					device->BindTexture(IGLDevice::Texture2D, ssaoBufferTexture);
-					device->TexParamater(IGLDevice::Texture2D, IGLDevice::TextureMagFilter,
-					                     IGLDevice::Linear);
-					device->TexParamater(IGLDevice::Texture2D, IGLDevice::TextureMinFilter,
-					                     IGLDevice::Linear);
-					ssaoBuffer.Release();
-				}
-
-				// render the map (sunlight pass) first
-				device->DepthFunc(IGLDevice::LessOrEqual);
-				device->Enable(IGLDevice::DepthTest, true);
-				device->Enable(IGLDevice::Texture2D, true);
-				device->Enable(IGLDevice::Blend, false);
-
-				if (!sceneDef.skipWorld && mapRenderer) {
-					mapRenderer->Prerender();
-					mapRenderer->RenderSunlightPass();
-				}
-
-				// determine the visible players (via their ID's)
-				modelRenderer->Prerender(false);
-				modelRenderer->DetermineVisiblePlayers(visiblePlayers);
-
-				// now render all other non-player objects normally
-				modelRenderer->Prerender(false);
-				modelRenderer->RenderSunlightPassNoPlayers();
-
-				device->Enable(IGLDevice::Blend, true);
-				device->Enable(IGLDevice::DepthTest, true);
-				device->DepthFunc(IGLDevice::Equal);
-				device->BlendFunc(IGLDevice::SrcAlpha, IGLDevice::One);
-
-				if (!sceneDef.skipWorld && mapRenderer) {
-					mapRenderer->RenderDynamicLightPass(lights);
-				}
-				modelRenderer->RenderDynamicLightPassNoPlayers(lights);
-
-				GLProfiler::Context p(*profiler, "Debug Line");
-				device->Enable(IGLDevice::Blend, false);
-				device->Enable(IGLDevice::DepthTest, true);
-				device->DepthFunc(IGLDevice::Less);
-				RenderDebugLines();
+				RenderObjects();
 			}
 
 			device->Enable(IGLDevice::CullFace, false);
-			if (settings.r_water && waterRenderer &&
-			    !client::Client::WallhackActive()) {
+			if (settings.r_water && waterRenderer) {
 				GLProfiler::Context p(*profiler, "Water");
 				waterRenderer->Update(dt);
 				waterRenderer->Render();
@@ -1067,62 +902,6 @@ namespace spades {
 				longSpriteRenderer->Render();
 			}
 
-			if (client::Client::WallhackActive()) {
-				device->DepthMask(true);
-				device->Clear(IGLDevice::DepthBufferBit);
-				device->Enable(IGLDevice::CullFace, true);
-
-				{
-					device->Enable(IGLDevice::DepthTest, true);
-					device->DepthFunc(IGLDevice::Less);
-					device->Enable(IGLDevice::Texture2D, true);
-					device->Enable(IGLDevice::Blend, false);
-
-					modelRenderer->RenderSunlightPassVisiblePlayers(visiblePlayers);
-
-					device->Enable(IGLDevice::Blend, true);
-					device->Enable(IGLDevice::DepthTest, true);
-					device->DepthFunc(IGLDevice::Equal);
-					device->BlendFunc(IGLDevice::SrcAlpha, IGLDevice::One);
-
-					modelRenderer->RenderDynamicLightPassVisiblePlayers(visiblePlayers, lights);
-				}
-
-				device->Enable(IGLDevice::DepthTest, true);
-				device->DepthFunc(IGLDevice::Less);
-				device->Enable(IGLDevice::Texture2D, true);
-				device->Enable(IGLDevice::Blend, false);
-				modelRenderer->RenderOccludedPlayers(visiblePlayers);
-
-				{
-					GLProfiler::Context p(*profiler, "Outlines Pass");
-
-					device->Enable(IGLDevice::Blend, false);
-					device->Enable(IGLDevice::DepthTest, true);
-					device->Enable(IGLDevice::CullFace, true);
-					device->DepthFunc(IGLDevice::LessOrEqual);
-
-					glCullFace(GL_FRONT);
-					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-					glEnable(GL_POLYGON_OFFSET_LINE);
-					glPolygonOffset(1, 1);
-					glLineWidth((int)cg_outlineStrength);
-
-					modelRenderer->RenderPlayerVisibilityOutlines(visiblePlayers);
-
-					glLineWidth(1);
-					glCullFace(GL_BACK);
-					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-					glPolygonOffset(0, 0);
-					glDisable(GL_POLYGON_OFFSET_LINE);
-				}
-
-				device->ColorMask(true, true, true, true);
-				device->Enable(IGLDevice::Blend, true);
-				device->DepthMask(false);
-				device->Enable(IGLDevice::CullFace, false);
-			}
-
 			device->Enable(IGLDevice::DepthTest, false);
 
 			GLFramebufferManager::BufferHandle handle;
@@ -1135,9 +914,7 @@ namespace spades {
 					GLProfiler::Context p(*profiler, "Preparation");
 					handle = fbManager->StartPostProcessing();
 				}
-				if (!client::Client::WallhackActive() &&
-				    settings.r_fogShadow && mapShadowRenderer &&
-				    fogColor.GetPoweredLength() > .000001f) {
+				if (settings.r_fogShadow && mapShadowRenderer) {
 					GLProfiler::Context p(*profiler, "Volumetric Fog");
 					if (settings.ShouldUseFogFilter2()) {
 						if (!fogFilter2) {
@@ -1188,10 +965,10 @@ namespace spades {
 					handle = temporalAAFilter->Filter(handle, settings.r_fxaa);
 				}
 
-					if (settings.r_bloom) {
-						GLProfiler::Context p(*profiler, "Bloom");
-						handle = lensDustFilter->Filter(handle);
-					}
+				if (settings.r_bloom) {
+					GLProfiler::Context p(*profiler, "Bloom");
+					handle = lensDustFilter->Filter(handle);
+				}
 
 				// Do r_fxaa before lens filter so that color aberration looks nice.
 				if (settings.r_fxaa) {
@@ -1226,59 +1003,52 @@ namespace spades {
 							rad /= prm.radius * prm.radius * 18.f;
 							if (rad > 1.f)
 								continue;
-							Vector3 color = prm.color * 0.6f;
-							{
-								// distance attenuation
-								float rad = (prm.origin - sceneDef.viewOrigin).GetPoweredLength();
-								rad /= prm.radius * prm.radius * 18.f;
-								if (rad > 1.f)
-									continue;
-								color *= 1.f - rad;
-							}
+							color *= 1.f - rad;
+						}
 
-							if (prm.type == client::DynamicLightTypeSpotlight) {
-								// spotlight
-								Vector3 diff = (sceneDef.viewOrigin - prm.origin).Normalize();
-								Vector3 lightdir = prm.spotAxis[2];
-								lightdir = lightdir.Normalize();
-								float cosVal = Vector3::Dot(diff, lightdir);
-								float minCosVal = cosf(prm.spotAngle * 0.5f);
-								if (cosVal < minCosVal) {
-									// out of range
-									continue;
-								}
-								color *= (cosVal - minCosVal) / (1.f - minCosVal);
-							}
-
-							// view cull
-							if (Vector3::Dot(sceneDef.viewAxis[2], (prm.origin - sceneDef.viewOrigin)) <
-							    0.f) {
+						if (prm.type == client::DynamicLightTypeSpotlight) {
+							// spotlight
+							Vector3 diff = (sceneDef.viewOrigin - prm.origin).Normalize();
+							Vector3 lightdir = prm.spotAxis[2];
+							lightdir = lightdir.Normalize();
+							float cosVal = Vector3::Dot(diff, lightdir);
+							float minCosVal = cosf(prm.spotAngle * 0.5f);
+							if (cosVal < minCosVal) {
+								// out of range
 								continue;
 							}
-
-							lensFlareRenderer.Draw(prm.origin - sceneDef.viewOrigin, true, color,
-							                       false);
+							color *= (cosVal - minCosVal) / (1.f - minCosVal);
 						}
-					}
 
-					// FIXME: these passes should be combined for lower VRAM bandwidth usage
+						// view cull
+						if (Vector3::Dot(sceneDef.viewAxis[2], (prm.origin - sceneDef.viewOrigin)) <
+						    0.f) {
+							continue;
+						}
 
-					if (settings.r_hdr) {
-						GLProfiler::Context p(*profiler, "Auto Exposure");
-						handle = autoExposureFilter->Filter(handle, dt);
+						lensFlareRenderer.Draw(prm.origin - sceneDef.viewOrigin, true, color,
+						                       false);
 					}
+				}
+
+				// FIXME: these passes should be combined for lower VRAM bandwidth usage
+
+				if (settings.r_hdr) {
+					GLProfiler::Context p(*profiler, "Auto Exposure");
+					handle = autoExposureFilter->Filter(handle, dt);
+				}
 
 				if (settings.r_hdr) {
 					GLProfiler::Context p(*profiler, "Gamma Correction");
 					handle = GLNonlinearlizeFilter(*this).Filter(handle);
 				}
 
-					if (settings.r_colorCorrection) {
-						GLProfiler::Context p(*profiler, "Color Correction");
-						Vector3 tint = smoothedFogColor + MakeVector3(1.f, 1.f, 1.f) * 0.5f;
-						tint = MakeVector3(1.f, 1.f, 1.f) / tint;
-						tint = Mix(tint, MakeVector3(1.f, 1.f, 1.f), 0.2f);
-						tint *= 1.f / std::min(std::min(tint.x, tint.y), tint.z);
+				if (settings.r_colorCorrection) {
+					GLProfiler::Context p(*profiler, "Color Correction");
+					Vector3 tint = smoothedFogColor + MakeVector3(1.f, 1.f, 1.f) * 0.5f;
+					tint = MakeVector3(1.f, 1.f, 1.f) / tint;
+					tint = Mix(tint, MakeVector3(1.f, 1.f, 1.f), 0.2f);
+					tint *= 1.f / std::min(std::min(tint.x, tint.y), tint.z);
 
 					float fogLuminance = (fogColor.x + fogColor.y + fogColor.z) * (1.0f / 3.0f);
 
@@ -1292,9 +1062,8 @@ namespace spades {
 					handle =
 					  GLColorCorrectionFilter(*this).Filter(handle, tint * exposure, fogLuminance);
 
-						// update smoothed fog color
-						smoothedFogColor = Mix(smoothedFogColor, fogColor, 0.002f);
-					}
+					// update smoothed fog color
+					smoothedFogColor = Mix(smoothedFogColor, fogColor, 0.002f);
 				}
 			}
 

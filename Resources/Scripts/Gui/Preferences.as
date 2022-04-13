@@ -658,19 +658,6 @@ namespace spades {
                                                      _Tr("Preferences", "OFF")},
                                     array<int> = {2, 1, 0});
 
-            layouter.AddHeading(_Tr("Preferences", "OpenGL Effects"));
-            layouter.AddToggleField(_Tr("Preferences", "Outlines"), "cg_outlines");
-            layouter.AddSliderField(_Tr("Preferences", "Outline Strength"), "cg_outlineStrength", 1, 3, 1,
-                                    ConfigNumberFormatter(0, "px"));
-            layouter.AddToggleField(_Tr("Preferences", "Textures"), "cg_textures");
-            layouter.AddToggleField(_Tr("Preferences", "Multi-Texture Mode"), "cg_multiTextures");
-            layouter.AddSliderField(_Tr("Preferences", "Texture Strength"), "cg_textureStrength", 0, 100, 1,
-                                    ConfigNumberFormatter(0, "%"));
-
-            layouter.AddHeading(_Tr("Preferences", "Spectator Tools"));
-            layouter.AddToggleField(_Tr("Preferences", "Spectator Player Names"), "dd_specNames");
-            layouter.AddToggleField(_Tr("Preferences", "Spectator Wallhack"), "dd_specWallhack");
-
             layouter.AddHeading(_Tr("Preferences", "Feedbacks"));
             layouter.AddVolumeSlider(_Tr("Preferences", "Chat Notify Sounds"), "cg_chatBeep");
             layouter.AddToggleField(_Tr("Preferences", "Hit Indicator"), "cg_hitIndicator");
