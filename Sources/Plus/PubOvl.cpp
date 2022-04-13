@@ -25,6 +25,7 @@
 DEFINE_SPADES_SETTING(po_names, "1");
 DEFINE_SPADES_SETTING(po_tracers, "0");
 DEFINE_SPADES_SETTING(po_xray, "0");
+DEFINE_SPADES_SETTING(po_xrayStrength, "1");
 
 namespace spades {
 	namespace pubovl {

@@ -83,6 +83,8 @@ SPADES_SETTING(p_hurtTint);
 SPADES_SETTING(p_hurtBlood);
 //SPADES_SETTING(p_crosshairSet);
 
+SPADES_SETTING(po_names);
+
 namespace spades {
 	namespace client {
 
@@ -705,6 +707,31 @@ namespace spades {
 		void Client::DrawSpectateHUD() {
 			SPADES_MARK_FUNCTION();
 
+			auto &font = *fontManager->GetGuiFont();
+
+			// Draw player names
+			if (dd_specNames && AreCheatsEnabled()) {
+				for (int i = 0; i < world->GetNumPlayerSlots(); ++i) {
+					auto *pIter = world->GetPlayer(i);
+
+					if (!pIter || !pIter->IsAlive() || pIter->GetTeamId() >= 2) {
+						continue;
+					}
+
+					const auto posxyz = Project(pIter->GetEye());
+					if (posxyz.z <= 0) {
+						continue;
+					}
+					Vector2 pos = {posxyz.x, posxyz.y};
+
+					const auto size = font.Measure(pIter->GetName());
+					pos.x -= size.x * .5f;
+					pos.y -= size.y;
+					font.DrawShadow(pIter->GetName(), pos, 0.85, MakeVector4(1, 1, 1, 1),
+					                MakeVector4(0, 0, 0, 0.5));
+				}
+			}
+
 			if (cg_hideHud) {
 				return;
 			}
@@ -724,8 +751,9 @@ namespace spades {
 			};
 
 			if (HasTargetPlayer(GetCameraMode())) {
-				addLine(_Tr("Client", "Following {0}",
-				            world->GetPlayerPersistent(GetCameraTargetPlayerId()).name));
+				addLine(_Tr("Client", "Following {0} (#{1})",
+				            world->GetPlayerPersistent(GetCameraTargetPlayerId()).name,
+				            GetCameraTargetPlayerId()));
 			}
 
 			textY += 10.0f;
