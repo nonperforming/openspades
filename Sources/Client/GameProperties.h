@@ -55,6 +55,7 @@ namespace spades {
 			 * Reserved for a future extension.
 			 */
 			bool useHeuristics = true;
+			bool clearCorpseOnRespawn = false;
 
 			/**
 			 * Raises the upper limit of the number of player slots to 128.
