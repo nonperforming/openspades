@@ -1042,6 +1042,7 @@ namespace spades {
 							savedPlayerTeam[pId] = team;
 						}
 					}
+					client->PlayerSpawned(pRef);
 
 				} break;
 				case PacketTypeBlockAction: {
