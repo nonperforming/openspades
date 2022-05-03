@@ -27,9 +27,11 @@ if ($isWindows)
 
   vcpkg/vcpkg install "@vcpkg_x86-windows.txt"
 
-  cmake -A Win32 -D "CMAKE_BUILD_TYPE=MinSizeRel" -D "CMAKE_TOOLCHAIN_FILE=$RepoRoot/vcpkg/scripts/buildsystems/vcpkg.cmake" -D "VCPKG_TARGET_TRIPLET=x86-windows-static" "-S$RepoRoot" "-B$RepoRoot/build"
-
-  cmake --build "$RepoRoot/build" --config MinSizeRel --parallel 16
+  try { cmake -A Win32 -D "CMAKE_BUILD_TYPE=MinSizeRel" -D "CMAKE_TOOLCHAIN_FILE=$RepoRoot/vcpkg/scripts/buildsystems/vcpkg.cmake" -D "VCPKG_TARGET_TRIPLET=x86-windows-static" "-S$RepoRoot" "-B$RepoRoot/build" }
+  catch { throw "CMake failed" }
+  
+  try { cmake --build "$RepoRoot/build" --config MinSizeRel --parallel 16 }
+  catch { throw "Build failed" } 
   
   7z a Windows.zip build/bin/MinSizeRel -r
 }
@@ -39,13 +41,18 @@ elseif ($isLinux)
   
   Write-Host Building for GNU/Linux...
  
+  sudo apt-get update
   sudo apt-get install pkg-config libglew-dev libcurl3-openssl-dev libsdl2-dev libsdl2-image-dev libalut-dev xdg-utils libfreetype6-dev libopus-dev libopusfile-dev cmake imagemagick libjpeg-dev libxinerama-dev libxft-dev -y
+  sudo apt-get upgrade
   
   mkdir build
   Push-Location build
   
-  cmake .. -DCMAKE_BUILD_TYPE=MinSizeRel
-  make -j 16
+  try { cmake .. -DCMAKE_BUILD_TYPE=MinSizeRel}
+  catch { throw "CMake failed" }
+  
+  try { make -j 16 }
+  catch { throw "Build failed" }
   
   cp Resources bin
   
@@ -64,15 +71,18 @@ elseif ($isMacOS)
   vcpkg/bootstrap-vcpkg.sh -disableMetrics
   vcpkg/vcpkg install "@vcpkg_x86_64-darwin.txt"
   
-  cmake -G Ninja .. -D CMAKE_BUILD_TYPE=MinSizeRel -D CMAKE_OSX_ARCHITECTURES=x86_64 -D CMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake -D VCPKG_TARGET_TRIPLET=x64-osx "-S$RepoRoot" "-B$RepoRoot/build"
+  try { cmake -G Ninja .. -D CMAKE_BUILD_TYPE=MinSizeRel -D CMAKE_OSX_ARCHITECTURES=x86_64 -D CMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake -D VCPKG_TARGET_TRIPLET=x64-osx "-S$RepoRoot" "-B$RepoRoot/build" }
+  catch { throw "CMake failed" }
+  
   Push-Location build
-  ninja
+  
+  try { ninja }
+  catch { throw "Build failed" }
   
   7z a MacOS.zip bin/OpenSpades.app -r
 }
 else
 {
   # Unknown OS
-  Write-Host Unknown OS! Aborting...
-  return -1
+  throw "Unknown OS - cannot continue"
 }
