@@ -26,6 +26,7 @@ namespace spades
   {
 		void GameProperties::HandleServerMessage(const std::string &msg)
     {
+			clearCorpseOnRespawn = true;
 			if (!useHeuristics)
       {
 				return;

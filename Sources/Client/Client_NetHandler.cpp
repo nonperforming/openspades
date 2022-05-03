@@ -292,6 +292,12 @@ namespace spades {
 			}
 		}
 
+		void Client::PlayerSpawned(Player &p) {
+			if (net->GetGameProperties()->clearCorpseOnRespawn) {
+				RemoveCorpseForPlayer(p.GetId());
+			}
+		}
+
 		void Client::GrenadeDestroyedBlock(spades::IntVector3 blk) {
 			SPAssert(map);
 
