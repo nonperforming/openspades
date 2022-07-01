@@ -78,14 +78,4 @@ std::string VersionInfo::GetVersionInfo() {
 	}
 
 	return std::string(buffer);
-
-	if (p_showCustomClientMessage)
-	{
-		std::string message = p_customClientMessage;
-		
-		buffer += " | ";
-		buffer += message;
-	}
-
-	return std::string(buffer);
 }
