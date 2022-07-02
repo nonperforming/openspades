@@ -110,7 +110,7 @@ function BuildUbuntu
   catch { ErrorCMake }
   
   Write-Host "Building using Ninja"
-  try { make -j 16 }
+  try { ninja }
   catch { ErrorBuild }
   
   Write-Host "Zipping binary"
