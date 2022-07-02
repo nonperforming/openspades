@@ -217,7 +217,7 @@ function WarningPullFailed
 param
 (
   [Parameter()]
-  [String] $OpenSpadesFlavor = P,
+  [String] $OpenSpadesFlavor = "P",
   [String] $URL = "https://github.com/nonperforming/openspadesplus.git",
   [String] $DirectoryName = "OpenSpadesPlus"
 )
