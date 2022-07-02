@@ -221,7 +221,7 @@ param
   [Parameter()]
   [String] $URL,
   [Parameter()]
-  [String] $DirectoryName,
+  [String] $DirectoryName
 )
 
 $OpenSpadesFlavorName
