@@ -65,13 +65,13 @@ function BuildLinux
   $Distro = lsb_release -i
   $Distro = $Distro.substring(16)
   
-  switch
+  switch ($Distro)
   {
-    <$Distro -eq Ubuntu> { BuildUbuntu; break}
-	<$Distro -eq Debian> { BuildDebian; break}
-	<$Distro -eq Arch> { BuildArch; break}	
-	<$Distro -eq Manjaro> { BuildArch; break}
-	<default> { ErrorUnknownDistro; break}
+    "Ubuntu" { BuildUbuntu; break}
+	  "Debian" { BuildDebian; break}
+	  "Arch" { BuildArch; break}	
+	  "Manjaro" { BuildArch; break}
+	  default { ErrorUnknownDistro; break}
   }
 }
 #endregion
@@ -224,11 +224,11 @@ param
 
 $OpenSpadesFlavorName
 
-switch
+switch ( $OpenSpadesFlavor )
 {
-  <$OpenSpadesFlavor -eq C> { Write-Host "Building OpenSpades (custom)"; $OpenSpadesFlavorName = "Custom"; break;}
-  <$OpenSpadesFlavor -eq O> { Write-Host "Building OpenSpades"; $URL = "https://github.com/yvt/openspades.git"; $OpenSpadesFlavorName = "OpenSpades"; $DirectoryName = "OpenSpades"; break;}
-  <$OpenSpadesFlavor -eq P> { Write-Host "Building OpenSpades+"; $URL = "https://github.com/nonperforming/openspadesplus.git"; $OpenSpadesFlavorName = "OpenSpadesPlus"; $DirectoryName = "OpenSpadesPlus"; break;}
+  "C" { Write-Host "Building OpenSpades (custom)"; $OpenSpadesFlavorName = "Custom"; break;}
+  "O" { Write-Host "Building OpenSpades"; $URL = "https://github.com/yvt/openspades.git"; $OpenSpadesFlavorName = "OpenSpades"; $DirectoryName = "OpenSpades"; break;}
+  "P" { Write-Host "Building OpenSpades+"; $URL = "https://github.com/nonperforming/openspadesplus.git"; $OpenSpadesFlavorName = "OpenSpadesPlus"; $DirectoryName = "OpenSpadesPlus"; break;}
 }
 
 Write-Host "Cloning/pulling changes from Git repository [$URL] - ($OpenSpadesFlavorName)"
