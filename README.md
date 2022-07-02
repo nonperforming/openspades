@@ -1,5 +1,5 @@
 # OpenSpades+
-# Revision 10
+# Revision 11
 
 [![AppVeyor](https://img.shields.io/appveyor/build/nonperforming/openspadesplus?style=flat-square&logo=appveyor&cacheSeconds=60)](https://ci.appveyor.com/project/nonperforming/openspadesplus)
 [![Latest](https://img.shields.io/github/v/release/nonperforming/openspadesplus?style=flat-square&cacheSeconds=600)](https://github.com/nonperforming/openspadesplus/releases)
@@ -42,7 +42,7 @@ No problem! Almost all the changes here are implemented in such a way so that to
 
 ## How to build?
 [Just build like normal OpenSpades.](https://github.com/yvt/openspades/wiki/Building)
-If you are on Linux and have all the dependencies installed there is a convenient [file](https://github.com/nonperforming/openspadesplus/blob/master/build.sh) that will run all the necessary commands to build OpenSpades+. Occasionally there will be bugs preventing you from launching or building the game (especially in the experimental branch) - in that case, please download the source code from the latest Release or fix the bug yourself (PR's welcome!).
+If you are on Linux and have all the dependencies installed there is a convenient [file](https://github.com/nonperforming/openspadesplus/blob/master/build.ps1) that will run all the necessary commands to build OpenSpades+. Occasionally there will be bugs preventing you from launching or building the game (especially in the experimental branch) - in that case, please download the source code from the latest Release or fix the bug yourself (PRs welcome!).
 
 ## What if I don't want to/can't build?
 Check the [Releases](https://github.com/nonperforming/openspadesplus/releases) tab for the latest stable release. Otherwise, check [AppVeyor](https://ci.appveyor.com/project/nonperforming/openspadesplus/build/artifacts) for the latest bleeding-edge releases.
@@ -58,7 +58,7 @@ As simple as it gets. Turn particles on or off along with some extra settings. T
 ### cg_ragdoll
 Default: 0
 
-Setting this to 0 (model instead of dynamic ragdoll) seemingly has marginally less impact than when set to 1. There is no point in setting this to 1 since OpenSpades+ removes ragdolls and said model.
+Setting this to 0 (model instead of dynamic ragdoll) seemingly has marginally less impact than when set to 1. There is no point in setting this to 1 if `p_corpse` is set to 0 since OpenSpades+ removes ragdolls and said model.
 
 ### r_vsync
 Default: 0
@@ -68,7 +68,7 @@ Unlimit refresh rate and decrease input delay. ***Highly recommended not to turn
 ### r_fullscreen
 Default: 1
 
-Launch the game in fullscreen and get immersed.
+Launch the game in fullscreen and be immersed in the game.
 
 ### cl_fps
 Default: 0
@@ -88,12 +88,12 @@ Show extra information such as accuracy (todo), FPS, ping, etc. ***Highly recomm
 ### cg_fov
 Default: 90
 
-FOV is very a preferential thing. For most people 90 FOV is fine; though nobody's judging you, go crazy and set it to 1 or 179 (anything more or less breaks the game - though I'm not stopping you though!)
+FOV is very a preferential thing. For most people 90 FOV is fine; though nobody's judging you, go crazy and set it to 1 or 179 (anything more or less breaks the game - I'm not stopping you though!)
 
 ### cg_ejectBrass
 Default: 0
 
-Disables the distracting shell casings when firing your weapon. ***Highly recommended not to turn this on.***
+Disables the distracting shell casings when firing your weapon, also slightly improving performance. ***Highly recommended not to turn this on.***
 
 ### cg_shake
 Default: 0
@@ -126,9 +126,9 @@ Default: 1
 Turns off the sound when attempting to switch to a weapon with no ammo, or when the server requests it.
 
 ### cg_animations
-Default: 1
+Default: 0
 
-Remove many animations, such at the scope-in animation when aiming down sights. This is enabled by default because it can be disorientating when quickly scoping in and out with a weapon.
+Remove many animations, such at the scope-in animation when aiming down sights.
 
 ### p_hurtTint
 Default: 1
@@ -173,7 +173,7 @@ Default: 1
 ### p_corpse
 Default: 0
 
-(STUB)
+Spawn corpses/ragdolls when a player dies.
 
 ## Other
 ### !!IMPORTANT!!

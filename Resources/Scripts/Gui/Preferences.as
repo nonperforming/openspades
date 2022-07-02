@@ -644,7 +644,7 @@ namespace spades {
             layouter.AddHeading(_Tr("Preferences", "Effects"));
             layouter.AddToggleField(_Tr("Preferences", "Blood"), "cg_blood");
             layouter.AddToggleField(_Tr("Preferences", "Ejecting Brass"), "cg_ejectBrass");
-            //layouter.AddToggleField(_Tr("Preferences", "Ragdoll, "cg_ragdoll");
+            layouter.AddToggleField(_Tr("Preferences", "Ragdoll (relies on p_corpse)"), "cg_ragdoll");
             // todo: implement p_corpse
             layouter.AddToggleField(_Tr("Preferences", "Animations"), "cg_animations");
             layouter.AddChoiceField(_Tr("Preferences", "Camera Shake"), "cg_shake",

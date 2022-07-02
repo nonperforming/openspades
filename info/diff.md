@@ -4,7 +4,7 @@
 
 cg_alertSounds: 1                                               cg_alertSounds: 1
 cg_alerts: 1                                                    cg_alerts: 1
-cg_animations: 1                                                cg_animations: 1
+cg_animations: 0                                              | cg_animations: 1
 cg_autoFocusSpeed: 0.4                                          cg_autoFocusSpeed: 0.4
 cg_blood: 1                                                     cg_blood: 1
 cg_centerMessage: 2                                             cg_centerMessage: 2

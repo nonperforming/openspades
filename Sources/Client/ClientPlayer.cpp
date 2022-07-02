@@ -49,7 +49,7 @@
 
 SPADES_SETTING(cg_ragdoll);
 SPADES_SETTING(cg_ejectBrass);
-DEFINE_SPADES_SETTING(cg_animations, "1");
+DEFINE_SPADES_SETTING(cg_animations, "0");
 SPADES_SETTING(cg_shake);
 SPADES_SETTING(r_hdr);
 DEFINE_SPADES_SETTING(cg_environmentalAudio, "1");
@@ -719,7 +719,7 @@ namespace spades {
 			if (!p_viewmodel)
 			{
 				viewWeaponOffset +=
-			  	Vector3{0.f, -100.f, 0.f} * (1.f - aimDownState); // incredibly hacky, please fix later
+			  	Vector3{0.f, -100.f, 0.f} * (1.f - aimDownState); // TODO: incredibly hacky, please fix later
 					// TODO: fix
 			}
 			else
@@ -841,7 +841,11 @@ namespace spades {
 				if (!cg_ragdoll) {
 					ModelRenderParam param;
 					param.matrix = Matrix4::Translate(p.GetOrigin() + MakeVector3(0, 0, 1));
-					param.matrix = param.matrix * Matrix4::Scale(0.f); // incredibly hacky. please fix.
+					if (!p_corpse)
+					{
+						param.matrix = param.matrix * Matrix4::Scale(0.f); // TODO: incredibly hacky. please fix.
+					}
+					param.matrix = param.matrix * Matrix4::Scale(.1f);
 					IntVector3 col = p.GetColor();
 					param.customColor = MakeVector3(col.x / 255.f, col.y / 255.f, col.z / 255.f);
 
