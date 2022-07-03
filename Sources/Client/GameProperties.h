@@ -55,6 +55,7 @@ namespace spades {
 			 * Reserved for a future extension.
 			 */
 			bool useHeuristics = true;
+
 			bool clearCorpseOnRespawn = false;
 
 			/**

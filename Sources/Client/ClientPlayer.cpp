@@ -59,6 +59,7 @@ DEFINE_SPADES_SETTING(cg_viewWeaponX, "0");
 DEFINE_SPADES_SETTING(cg_viewWeaponY, "0");
 DEFINE_SPADES_SETTING(cg_viewWeaponZ, "0");
 SPADES_SETTING(p_viewmodel);
+SPADES_SETTING(p_corpse);
 
 namespace spades {
 	namespace client {

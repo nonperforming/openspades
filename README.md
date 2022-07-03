@@ -194,4 +194,4 @@ Load mods from a specific folder (i.e. OS+ specific weapon mods/soundmods)
 
 ### On commit:
 
-Bump OpenSpades+ revision level in OpenSpadesPlus.cpp and in README.md
+Bump OpenSpades+ revision level in OpenSpadesPlus.cpp and in README.md, also in PackageInfo.json

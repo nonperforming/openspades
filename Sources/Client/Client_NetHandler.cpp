@@ -31,6 +31,7 @@
 
 #include "CTFGameMode.h"
 #include "GameMap.h"
+#include "GameProperties.h"
 #include "IGameMode.h"
 #include "TCGameMode.h"
 #include "World.h"
@@ -87,7 +88,7 @@ namespace spades {
 				std::string otherTeam = chatWindow->TeamColorMessage(world->GetTeam(old).name, old);
 				msg = _Tr("Client", "{0} took {1}'s territory", teamName, otherTeam);
 			} else {
-				msg = _Tr("Client", "{0} claimed a territory", teamName);
+				msg = _Tr("Client", "{0} took a territory", teamName);
 			}
 			chatWindow->AddMessage(msg);
 
@@ -95,9 +96,9 @@ namespace spades {
 				teamName = world->GetTeam(teamId).name;
 				if (old < 2) {
 					std::string otherTeam = world->GetTeam(old).name;
-					msg = _Tr("Client", "{0} took {1}'s Territory", teamName, otherTeam);
+					msg = _Tr("Client", "{0} took {1}'s territory", teamName, otherTeam);
 				} else {
-					msg = _Tr("Client", "{0} claimed a Territory", teamName);
+					msg = _Tr("Client", "{0} took a territory", teamName);
 				}
 				NetLog("%s", msg.c_str());
 				centerMessageView->AddMessage(msg);
@@ -123,14 +124,14 @@ namespace spades {
 
 				std::string otherTeamName = chatWindow->TeamColorMessage(
 				  world->GetTeam(1 - p.GetTeamId()).name, 1 - p.GetTeamId());
-				msg = _Tr("Client", "{0} captured {1}'s intel", holderName, otherTeamName);
+				msg = _Tr("Client", "{0} capped {1}'s intel", holderName, otherTeamName);
 				chatWindow->AddMessage(msg);
 			}
 
 			if ((int)cg_centerMessage != 0) {
 				std::string holderName = p.GetName();
 				std::string otherTeamName = world->GetTeam(1 - p.GetTeamId()).name;
-				msg = _Tr("Client", "{0} captured {1}'s Intel.", holderName, otherTeamName);
+				msg = _Tr("Client", "{0} capped {1}'s intel", holderName, otherTeamName);
 				NetLog("%s", msg.c_str());
 				centerMessageView->AddMessage(msg);
 			}
@@ -161,7 +162,7 @@ namespace spades {
 			if ((int)cg_centerMessage != 0) {
 				std::string holderName = p.GetName();
 				std::string otherTeamName = world->GetTeam(1 - p.GetTeamId()).name;
-				msg = _Tr("Client", "{0} took {1}'s Intel.", holderName, otherTeamName);
+				msg = _Tr("Client", "{0} took {1}'s intel", holderName, otherTeamName);
 				NetLog("%s", msg.c_str());
 				centerMessageView->AddMessage(msg);
 			}
@@ -318,11 +319,11 @@ namespace spades {
 		void Client::TeamWon(int teamId) {
 			std::string msg;
 			msg = chatWindow->TeamColorMessage(world->GetTeam(teamId).name, teamId);
-			msg = _Tr("Client", "{0} wins the game!", msg);
+			msg = _Tr("Client", "{0} wins!", msg);
 			chatWindow->AddMessage(msg);
 
 			msg = world->GetTeam(teamId).name;
-			msg = _Tr("Client", "{0} wins the game!", msg);
+			msg = _Tr("Client", "{0} wins!", msg);
 			NetLog("%s", msg.c_str());
 			centerMessageView->AddMessage(msg);
 
