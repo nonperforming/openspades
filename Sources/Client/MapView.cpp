@@ -282,18 +282,22 @@ namespace spades {
 
 			Vector2 center = {focusPlayerPos.x, focusPlayerPos.y};
 			float cfgMapSize = cg_minimapSize;
-			if (cfgMapSize < 32)
-				cfgMapSize = 32;
-			if (cfgMapSize > 256)
-				cfgMapSize = 256;
+			/*
+				if (cfgMapSize < 32)
+					cfgMapSize = 32;
+				if (cfgMapSize > 256)
+					cfgMapSize = 256;
+			*/
 			Vector2 mapWndSize = {cfgMapSize, cfgMapSize};
 			float scale = actualScale;
 
 			center = Mix(center, mapSize * .5f, zoomState);
 
 			Vector2 zoomedSize = {512, 512};
-			if (renderer.ScreenWidth() < 512.f || renderer.ScreenHeight() < 512.f)
-				zoomedSize = MakeVector2(256, 256);
+			/* 
+				if (renderer.ScreenWidth() < 512.f || renderer.ScreenHeight() < 512.f)
+					zoomedSize = MakeVector2(256, 256);
+			*/
 			if (largeMap) {
 				float per = zoomState;
 				per = 1.f - per;
@@ -301,7 +305,7 @@ namespace spades {
 				per = 1.f - per;
 				per = Mix(.7f, 1.f, per);
 				zoomedSize = Mix(MakeVector2(0, 0), zoomedSize, per);
-				mapWndSize = zoomedSize;
+				mapWndSize = zoomedSize;x
 			}
 
 			Vector2 inRange = mapWndSize * .5f * scale;
