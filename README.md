@@ -47,6 +47,9 @@ If you are on Linux and have all the dependencies installed there is a convenien
 ## What if I don't want to/can't build?
 Check the [Releases](https://github.com/nonperforming/openspadesplus/releases) tab for the latest stable release. Otherwise, check [AppVeyor](https://ci.appveyor.com/project/nonperforming/openspadesplus/build/artifacts) for the latest bleeding-edge releases.
 
+## Statistics
+![Alt](https://repobeats.axiom.co/api/embed/7a95a0e7782fa65df3b7786c36c7ab572aef12f4.svg "Repobeats analytics image")
+
 ## Useful console variables
 Most, if not all of these variables should be under the Options/Preferences menu, should you need it.
 
