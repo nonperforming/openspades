@@ -1,6 +1,9 @@
 # OpenSpades+
 # Revision 11
 
+# This is no longer actively supported!
+# Please use [NucetoSpades](https://github.com/Nuceto/NucetoSpades)!
+
 [![AppVeyor](https://img.shields.io/appveyor/build/nonperforming/openspadesplus?style=flat-square&logo=appveyor&cacheSeconds=60)](https://ci.appveyor.com/project/nonperforming/openspadesplus)
 [![Latest](https://img.shields.io/github/v/release/nonperforming/openspadesplus?style=flat-square&cacheSeconds=600)](https://github.com/nonperforming/openspadesplus/releases)
 [![License](https://img.shields.io/github/license/nonperforming/openspadesplus?style=flat-square&cacheSeconds=86400)](https://github.com/nonperforming/openspadesplus/blob/main/LICENSE)
