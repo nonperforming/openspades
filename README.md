@@ -1,6 +1,9 @@
 # OpenSpades+
 # Revision 11
 
+# This is no longer actively supported!
+# Please use [NucetoSpades](https://github.com/Nuceto/NucetoSpades)!
+
 [![AppVeyor](https://img.shields.io/appveyor/build/nonperforming/openspadesplus?style=flat-square&logo=appveyor&cacheSeconds=60)](https://ci.appveyor.com/project/nonperforming/openspadesplus)
 [![Latest](https://img.shields.io/github/v/release/nonperforming/openspadesplus?style=flat-square&cacheSeconds=600)](https://github.com/nonperforming/openspadesplus/releases)
 [![License](https://img.shields.io/github/license/nonperforming/openspadesplus?style=flat-square&cacheSeconds=86400)](https://github.com/nonperforming/openspadesplus/blob/main/LICENSE)
@@ -46,6 +49,9 @@ If you are on Linux and have all the dependencies installed there is a convenien
 
 ## What if I don't want to/can't build?
 Check the [Releases](https://github.com/nonperforming/openspadesplus/releases) tab for the latest stable release. Otherwise, check [AppVeyor](https://ci.appveyor.com/project/nonperforming/openspadesplus/build/artifacts) for the latest bleeding-edge releases.
+
+## Statistics
+![Alt](https://repobeats.axiom.co/api/embed/7a95a0e7782fa65df3b7786c36c7ab572aef12f4.svg "Repobeats analytics image")
 
 ## Useful console variables
 Most, if not all of these variables should be under the Options/Preferences menu, should you need it.
