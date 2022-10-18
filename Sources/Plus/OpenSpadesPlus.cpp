@@ -31,6 +31,8 @@ DEFINE_SPADES_SETTING(p_showAccuracyInStats, "1");
 DEFINE_SPADES_SETTING(p_showAccuracyUnderMap, "0");
 DEFINE_SPADES_SETTING(p_streamer, "0");
 DEFINE_SPADES_SETTING(p_corpse, "0");
+DEFINE_SPADES_SETTING(p_hidePalette, "0");
+
 DEFINE_SPADES_SETTING(p_hurtTint, "1");
 DEFINE_SPADES_SETTING(p_hurtBlood, "0");
 

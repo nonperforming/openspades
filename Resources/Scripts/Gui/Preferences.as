@@ -656,6 +656,7 @@ namespace spades {
                                                      _Tr("Preferences", "LESS"),
                                                      _Tr("Preferences", "OFF")},
                                     array<int> = {2, 1, 0});
+            layouter.AddToggleField(_Tr("Preferences", "Show self tracers"), "cg_tracersFirstPerson");
 
             layouter.AddHeading(_Tr("Preferences", "Feedbacks"));
             layouter.AddVolumeSlider(_Tr("Preferences", "Chat Notify Sounds"), "cg_chatBeep");
@@ -667,23 +668,26 @@ namespace spades {
             layouter.AddToggleField(_Tr("Preferences", "Allow Unicode"), "cg_unicode");
             layouter.AddToggleField(_Tr("Preferences", "Server Alert"), "cg_serverAlert");
 
+            layouter.AddHeading(_Tr("Preferences", "Minimap"));
+            layouter.AddSliderField(_Tr("Preferences", "Size"), "cg_minimapSize", 0, 1024,
+                                    8, ConfigNumberFormatter(0, " px"));
+            layouter.AddToggleField(_TR("Preferences", "Player colors"), "cg_minimapPlayerColor");
+            layouter.AddToggleField(_TR("Preferences", "Player icons"), "cg_minimapPlayerIcon");
+
             layouter.AddHeading(_Tr("Preferences", "Misc"));
             layouter.AddSliderField(_Tr("Preferences", "Field of View"), "cg_fov", 1, 179, 1,
                                     ConfigNumberFormatter(0, " deg"));
-            layouter.AddSliderField(_Tr("Preferences", "Minimap size"), "cg_minimapSize", 128, 256,
-                                    8, ConfigNumberFormatter(0, " px"));
+            
             layouter.AddToggleField(_Tr("Preferences", "Show Statistics"), "cg_stats");
             layouter.AddToggleField(_Tr("Preferences", "Skip Spectating Dead Players"), "cg_skipDeadPlayersWhenDead");
             
             layouter.AddHeading(_Tr("Preferences", "OpenSpades+"));
             layouter.AddToggleField(_Tr("Preferences", "Viewmodel"), "p_viewmodel");
             layouter.AddToggleField(_Tr("Preferences", "Show Custom Client Message"), "p_showCustomClientMessage");
-
             ConfigField @clientField = layouter.AddInputField(
                 _Tr("Preferences", "Custom Client Message"), "p_customClientMessage", not options.GameActive);
             clientField.MaxLength = 100;
             clientField.DenyNonAscii = false;
-
             layouter.AddToggleField(_Tr("Preferences", "Show IP (Stats)"), "p_showIP");
             layouter.AddToggleField(_Tr("Preferences", "Accuracy (Stats)"), "p_showAccuracyInStats");
             layouter.AddToggleField(_Tr("Preferences", "Accuracy (Map)"), "p_showAccuracyUnderMap");
@@ -691,6 +695,14 @@ namespace spades {
             layouter.AddToggleField(_Tr("Preferences", "Damage Tint"), "p_hurtTint");
             layouter.AddToggleField(_Tr("Preferences", "Damage Blood"), "p_hurtBlood");
             layouter.AddToggleField(_Tr("Preferences", "Corpses"), "p_corpse");
+            layouter.AddToggleField(_Tr("Preferences", "Palette"), "p_hidePalette");
+
+            layouter.AddHeading(_Tr("Preferences", "PubOvl"));
+            layouter.AddToggleField(_Tr("Preferences", "Player names"), "po_names");
+            layouter.AddToggleField(_Tr("Preferences", "Aim tracers"), "po_tracers");
+            // TODO: implement
+            layouter.AddToggleField(_Tr("Preferences", "Wallhack"), "po_xray");
+
 
             layouter.FinishLayout();
         }

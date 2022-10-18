@@ -175,6 +175,11 @@ Default: 0
 
 Spawn corpses/ragdolls when a player dies.
 
+### p_hidePalette
+Default: 0
+
+(STUB) Hides the block colo(u)r palette.
+
 ## Other
 ### !!IMPORTANT!!
 Save files and game files are kept seperate from OpenSpades. This does not include mod `.pak`s or folders, though it is planned for OpenSpades+ to load mods from the folder `OSMods` instead which allows you to have OpenSpades+ specific mods. It is nigh impossible that OpenSpades+ will bork or even modify an OpenSpades install in any way. To use your OpenSpades config file as a template/your config file for OpenSpades+, you can copy your `SPConfig.cfg` over to `OSPlus.cfg` in the same folder. Please notice that OpenSpades+ uses different default options which you may find helpful. You can always set them manually however, see ["Useful console variables"](https://github.com/nonperforming/openspadesplus#useful-console-variables). There is a list of differences between OpenSpades+ and OpenSpades settings [here](https://github.com/nonperforming/openspadesplus/blob/main/info/diff.md)

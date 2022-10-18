@@ -55,7 +55,7 @@ if(APPLE OR WIN32)
 	set_target_properties(OpenSpades PROPERTIES OUTPUT_NAME OpenSpades)
 else(APPLE)
 	set_target_properties(OpenSpades PROPERTIES OUTPUT_NAME openspades)
-endif(APPLE)
+endif(APPLE OR WIN32)
 
 if (APPLE)
 	# The built pak files are copied into the macOS application bundle. CMake
