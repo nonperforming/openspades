@@ -2,6 +2,7 @@
 # You may try to use it to build locally,
 # but your milage may vary.
 
+# TODO: Need help with this
 # Parameters:
 # Defaults to OpenSpades if no argument is given
 # O - OpenSpades
@@ -9,6 +10,7 @@
 # N - NucetoSpades
 # Z - ZeroSpades
 # C - Custom (provide Git url)
+# L - Local
 
 #region AppVeyor CI Failure
 #$ErrorActionPreference = 'Stop'
@@ -214,51 +216,52 @@ function WarningPullFailed
 
 
 #region Pick the correct build script to run
-param
-(
-  [Parameter()]
-  [String] $OpenSpadesFlavor, 
-  [Parameter()]
-  [String] $URL,
-  [Parameter()]
-  [String] $DirectoryName
-)
-
-$OpenSpadesFlavorName
-
-switch ( $OpenSpadesFlavor )
-{
-  "C" { Write-Host "Building OpenSpades (custom)"; $OpenSpadesFlavorName = "Custom"; break;}
-  "O" { Write-Host "Building OpenSpades"; $URL = "https://github.com/yvt/openspades.git"; $OpenSpadesFlavorName = "OpenSpades"; $DirectoryName = "OpenSpades"; break;}
-  "P" { Write-Host "Building OpenSpades+"; $URL = "https://github.com/nonperforming/openspadesplus.git"; $OpenSpadesFlavorName = "OpenSpadesPlus"; $DirectoryName = "OpenSpadesPlus"; break;}
-}
-
-Write-Host "Cloning/pulling changes from Git repository [$URL] - ($OpenSpadesFlavorName)"
-
-if (Test-Path "$DirectoryName")
-{
-  Write-Host "Repository already exists on drive!"
-  
-  Push-Location $DirectoryName
-  
-  try
-  {
-    git pull
-  }
-  catch
-  {
-    WarningPullFailed
-  }
-
-}
-else
-{
-  Write-Host "Repository does not exist on drive! Cloning repository..."
-  
-  git clone $URL $DirectoryName;
-  Push-Location $DirectoryName
-}
-
+# TODO: How does this work? Help needed
+#param
+#(
+#  [Parameter()]
+#  [String] $OpenSpadesFlavor, 
+#  [Parameter()]
+#  [String] $URL,
+#  [Parameter()]
+#  [String] $DirectoryName
+#)
+#
+#$OpenSpadesFlavorName
+#
+#switch ( $OpenSpadesFlavor )
+#{
+#  "C" { Write-Host "Building OpenSpades (custom)"; $OpenSpadesFlavorName = "Custom"; break;}
+#  "O" { Write-Host "Building OpenSpades"; $URL = "https://github.com/yvt/openspades.git"; $OpenSpadesFlavorName = "OpenSpades"; $DirectoryName = "OpenSpades"; break;}
+#  "P" { Write-Host "Building OpenSpades+"; $URL = "https://github.com/nonperforming/openspadesplus.git"; $OpenSpadesFlavorName = "OpenSpadesPlus"; $DirectoryName = "OpenSpadesPlus"; break;}
+#}
+#
+#Write-Host "Cloning/pulling changes from Git repository [$URL] - ($OpenSpadesFlavorName)"
+#
+#if (Test-Path "$DirectoryName")
+#{
+#  Write-Host "Repository already exists on drive!"
+#  
+#  Push-Location $DirectoryName
+#  
+#  try
+#  {
+#    git pull
+#  }
+#  catch
+#  {
+#    WarningPullFailed
+#  }
+#
+#}
+#else
+#{
+#  Write-Host "Repository does not exist on drive! Cloning repository..."
+#  
+#  git clone $URL $DirectoryName;
+#  Push-Location $DirectoryName
+#}
+#
 if ($isWindows)
 {
   BuildWindows
