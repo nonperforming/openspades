@@ -32,7 +32,7 @@ DEFINE_SPADES_SETTING(cg_keyPaletteLeft, "Left");
 DEFINE_SPADES_SETTING(cg_keyPaletteRight, "Right");
 DEFINE_SPADES_SETTING(cg_keyPaletteUp, "Up");
 DEFINE_SPADES_SETTING(cg_keyPaletteDown, "Down");
-DEFINE_SPADES_SETTING(p_hidePalette, "0")
+SPADES_SETTING(p_hidePalette);
 
 namespace spades {
 	namespace client {
