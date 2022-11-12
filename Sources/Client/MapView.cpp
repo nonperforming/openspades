@@ -305,7 +305,7 @@ namespace spades {
 				per = 1.f - per;
 				per = Mix(.7f, 1.f, per);
 				zoomedSize = Mix(MakeVector2(0, 0), zoomedSize, per);
-				mapWndSize = zoomedSize;x
+				mapWndSize = zoomedSize;//x
 			}
 
 			Vector2 inRange = mapWndSize * .5f * scale;
