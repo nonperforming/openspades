@@ -846,7 +846,10 @@ namespace spades {
 					{
 						param.matrix = param.matrix * Matrix4::Scale(0.f); // TODO: incredibly hacky. please fix.
 					}
-					param.matrix = param.matrix * Matrix4::Scale(.1f);
+					else
+					{
+						param.matrix = param.matrix * Matrix4::Scale(.1f);
+					}
 					IntVector3 col = p.GetColor();
 					param.customColor = MakeVector3(col.x / 255.f, col.y / 255.f, col.z / 255.f);
 
