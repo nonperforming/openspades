@@ -671,8 +671,9 @@ namespace spades {
             layouter.AddHeading(_Tr("Preferences", "Minimap"));
             layouter.AddSliderField(_Tr("Preferences", "Size"), "cg_minimapSize", 0, 1024,
                                     8, ConfigNumberFormatter(0, " px"));
-            layouter.AddToggleField(_TR("Preferences", "Player colors"), "cg_minimapPlayerColor");
-            layouter.AddToggleField(_TR("Preferences", "Player icons"), "cg_minimapPlayerIcon");
+            // TODO: do this you lazy
+            //layouter.AddToggleField(_TR("Preferences", "Player colors"), "cg_minimapPlayerColor");
+            //layouter.AddToggleField(_TR("Preferences", "Player icons"), "cg_minimapPlayerIcon");
 
             layouter.AddHeading(_Tr("Preferences", "Misc"));
             layouter.AddSliderField(_Tr("Preferences", "Field of View"), "cg_fov", 1, 179, 1,
