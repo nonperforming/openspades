@@ -1019,7 +1019,7 @@ namespace spades {
 				if (fps == 0.0)
 					str += "FPS: N/A | ";
 				else {
-					sprintf(buf, "FPS: %.02f | ", fps);
+					sprintf(buf, "%.02ffps | ", fps);
 					str += buf;
 				}
 			}
@@ -1029,7 +1029,7 @@ namespace spades {
 				if (ups == 0.0)
 					str += "UPS: N/A | ";
 				else {
-					sprintf(buf, "UPS: %.02f | ", ups);
+					sprintf(buf, "%.02fups | ", ups);
 					str += buf;
 				}
 			}
@@ -1038,7 +1038,7 @@ namespace spades {
 				auto ping = net->GetPing();
 				auto upbps = net->GetUplinkBps();
 				auto downbps = net->GetDownlinkBps();
-				sprintf(buf, "Ping: %dms | UL/DL: %.02f/%.02fkbps", ping, upbps / 1000.0,
+				sprintf(buf, "%dms | %.02fu/%.02fd kbps", ping, upbps / 1000.0,
 				        downbps / 1000.0);
 				str += buf;
 			}

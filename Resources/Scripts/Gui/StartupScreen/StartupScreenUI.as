@@ -104,7 +104,7 @@ namespace spades {
 			if (isPrereleaseVersion) {
 				Font @font = manager.RootElement.Font;
 				string text = "Pre-release Version";
-                Vector2 position(225.0f, 34.0f);
+                Vector2 position(250.0f, 34.0f);
                 font.DrawShadow(text, position,
                                 1.0, Vector4(0.0f, 0.0f, 0.0f, 1.0f),
                                 Vector4(1.0f, 0.5f, 0.5f, 1.0f));
