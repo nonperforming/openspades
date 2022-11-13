@@ -39,7 +39,7 @@ function BuildWindows
   }
   catch
   {
-	ErrorDependencies
+    ErrorDependencies
   }
 
   Write-Host "Configuring build using CMake"
