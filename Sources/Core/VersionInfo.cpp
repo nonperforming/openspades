@@ -24,7 +24,7 @@ std::string VersionInfo::GetVersionInfo() {
 	buffer = "GNU/Linux";
 
 #elif defined(TARGET_OS_MAC)
-	buffer = "Mac OS";
+	buffer = "MacOS";
 
 #elif defined(OS_PLATFORM_WINDOWS)
 	if (IsWindowsVistaOrGreater() && !IsWindowsVistaSP1OrGreater()) {
@@ -40,16 +40,16 @@ std::string VersionInfo::GetVersionInfo() {
 	} else if (IsWindows8OrGreater() && !IsWindows8Point1OrGreater()) {
 		buffer = "Windows 8";
 	} else if (IsWindows8Point1OrGreater() && !IsWindows10OrGreater()) {
-		buffer = "Windows 8.1";
+		buffer = "Windows 8.1"; // doesnt work winapi is shit
 	} else if (IsWindows10OrGreater()) {
-		buffer = "Windows 10";
+		buffer = "Windows 10"; // doesnt work winapi is shit
 	} else {
-		buffer = "Windows 11";
+		buffer = "Windows 11"; // doesnt work winapi is shit
 	}
 
 	if (IsWindowsServer())
 		buffer += " Server";
-	return buffer;
+
 #elif defined(__FreeBSD__)
 	buffer = "FreeBSD";
 #elif defined(__OpenBSD__)
