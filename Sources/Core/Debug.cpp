@@ -198,7 +198,7 @@ namespace spades {
 
 	void StartLog() {
 		attemptedToInitializeLog = true;
-		logStream = FileManager::OpenForWriting("SystemMessages.log");
+		logStream = FileManager::OpenForWriting("OpenSpadesPlus.log");
 
 		logStream->Write(accumlatedLog);
 		accumlatedLog.clear();
@@ -251,7 +251,7 @@ namespace spades {
 		std::string outStr = EscapeControlCharacters(buf);
 		printf("%s", outStr.c_str());
 
-		// (2) The log file a.k.a. `SystemMessages.log`
+		// (2) The log file a.k.a. `OpenSpadesPlus.log`
 		if (logStream || !attemptedToInitializeLog) {
 
 			if (attemptedToInitializeLog) {

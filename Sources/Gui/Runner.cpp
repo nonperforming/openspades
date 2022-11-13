@@ -53,13 +53,13 @@ namespace spades {
 			if (!err.empty()) {
 
 				std::string msg = err;
-				msg = _Tr("Main", "A serious error caused OpenSpades to stop "
-				                  "working:\n\n{0}\n\nSee SystemMessages.log for more details.",
+				msg = _Tr("Main", "A serious error caused OpenSpades+ to stop "
+				                  "working:\n\n{0}\n\nSee OpenSpadesPlus.log for more details.",
 				          msg);
 
 				SDL_InitSubSystem(SDL_INIT_VIDEO);
 				if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-				                             _Tr("Main", "OpenSpades Fatal Error").c_str(),
+				                             _Tr("Main", "OpenSpades+ Fatal Error").c_str(),
 				                             msg.c_str(), nullptr)) {
 					// showing dialog failed.
 					// TODO: do appropriate action

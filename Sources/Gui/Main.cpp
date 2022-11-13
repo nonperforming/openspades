@@ -470,7 +470,7 @@ int main(int argc, char **argv) {
 
 #endif
 
-		// start log output to SystemMessages.log
+		// start log output to OpenSpadesPlus.log
 		try {
 			spades::StartLog();
 		} catch (const std::exception &ex) {
@@ -479,7 +479,7 @@ int main(int argc, char **argv) {
 			  "Failed to start recording log because of the following error:\n{0}\n\n"
 			  "OpenSpades+ will continue to run, but any critical events are not logged.",
 			  ex.what());
-			if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "OpenSpades Log System Failure",
+			if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "OpenSpades+ Log System Failure",
 			                             msg.c_str(), splashWindow->GetWindow())) {
 				// showing dialog failed.
 			}
@@ -670,7 +670,7 @@ int main(int argc, char **argv) {
 		std::string msg = ex.what();
 		msg = _Tr("Main",
 		          "A serious error caused OpenSpades+ to stop working:\n\n{0}\n\nSee "
-		          "SystemMessages.log for more details.",
+		          "OpenSpadesPlus.log for more details.",
 		          msg);
 
 		SPLog("[!] Terminating due to the fatal error: %s", ex.what());
