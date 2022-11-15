@@ -2,9 +2,10 @@
 # Revision 11
 
 [![AppVeyor](https://img.shields.io/appveyor/build/nonperforming/openspadesplus?style=flat-square&logo=appveyor&cacheSeconds=60)](https://ci.appveyor.com/project/nonperforming/openspadesplus)
+[![Downloads](https://img.shields.io/github/downloads/nonperforming/openspadesplus/total?color=yellow&style=flat-square)](https://github.com/nonperforming/openspadesplus/releases/latest)
 [![Latest](https://img.shields.io/github/v/release/nonperforming/openspadesplus?style=flat-square&cacheSeconds=600)](https://github.com/nonperforming/openspadesplus/releases)
-[![License](https://img.shields.io/github/license/nonperforming/openspadesplus?style=flat-square&cacheSeconds=86400)](https://github.com/nonperforming/openspadesplus/blob/main/LICENSE)
 [![Discord](https://img.shields.io/discord/1041996994639573012?label=discord&logo=discord&style=flat-square)](https://discord.gg/KgJDe5cBGM)
+[![License](https://img.shields.io/github/license/nonperforming/openspadesplus?style=flat-square&cacheSeconds=86400)](https://github.com/nonperforming/openspadesplus/blob/main/LICENSE)
 
 [PLEASE READ THE ENTIRE README.md FILE BEFORE USING](https://github.com/nonperforming/openspadesplus#important)
 ## What is this?
