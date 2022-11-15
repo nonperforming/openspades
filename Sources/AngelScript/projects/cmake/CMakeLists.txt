@@ -205,17 +205,17 @@ install(FILES
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
-	"${CMAKE_CURRENT_BINARY_DIR}/Angelscript/AngelscriptConfigVersion.cmake"
+	"${CMAKE_CURRENT_BINARY_DIR}/AngelScript/AngelscriptConfigVersion.cmake"
 	VERSION ${PROJECT_VERSION}
 	COMPATIBILITY AnyNewerVersion
 )
 
 export(EXPORT AngelscriptTargets
-	FILE "${CMAKE_CURRENT_BINARY_DIR}/Angelscript/AngelscriptTargets.cmake"
+	FILE "${CMAKE_CURRENT_BINARY_DIR}/AngelScript/AngelscriptTargets.cmake"
 	NAMESPACE Angelscript::
 )
 configure_file(cmake/AngelscriptConfig.cmake
-	"${CMAKE_CURRENT_BINARY_DIR}/Angelscript/AngelscriptConfig.cmake"
+	"${CMAKE_CURRENT_BINARY_DIR}/AngelScript/AngelscriptConfig.cmake"
 	COPYONLY
 )
 
