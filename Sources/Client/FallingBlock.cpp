@@ -179,7 +179,7 @@ namespace spades {
 		void FallingBlock::Render3D() {
 			ModelRenderParam param;
 			param.matrix = matrix;
-			if (plus::HideBlocks || p_fallingBlocks)
+			if (plus::fallingBlocks || p_fallingBlocks)
 			{
 				client->GetRenderer().RenderModel(*model, param);
 			}

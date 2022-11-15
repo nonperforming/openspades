@@ -29,14 +29,14 @@ namespace spades
 	{
     	float minFov = -360;
         float maxFov = 360;
-		int fallingBlocks = 1;
+		int fallingBlocks = 0;
 
 		void resetLimits()
 		{
 			SPLog("Raising server restrictions");
 			minFov = -360;
 			maxFov = 360;
-			fallingBlocks = 1;
+			fallingBlocks = 0;
 		}
 	}
 }
