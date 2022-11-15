@@ -33,6 +33,7 @@ namespace spades
 
 		void resetLimits()
 		{
+			SPLog("Raising server restrictions");
 			minFov = -360;
 			maxFov = 360;
 			fallingBlocks = 1;

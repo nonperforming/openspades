@@ -29,5 +29,7 @@ namespace spades
         extern float minFov;
         extern float maxFov;
         extern int fallingBlocks;
+
+        void resetLimits();
 	}
 }

@@ -40,6 +40,8 @@
 
 #include "NetClient.h"
 
+#include <Plus/ServerLimits.h>
+
 DEFINE_SPADES_SETTING(cg_fov, "90");
 DEFINE_SPADES_SETTING(cg_thirdperson, "0");
 DEFINE_SPADES_SETTING(cg_manualFocus, "0");
@@ -146,13 +148,13 @@ namespace spades {
 			def.zFar = 200.f;
 			
 			// Limit FOV according to server
-			if (!((float)cg_fov < Plus::maxFov)) {
+			if (!((float)cg_fov < plus::maxFov)) {
 				// FOV too big
-				cg_fov = Plus::maxFov;
+				cg_fov = plus::maxFov;
 			}
-			if (!((float)cg_fov > Plus::minFov)) {
+			if (!((float)cg_fov > plus::minFov)) {
 				// FOV too small
-				cg_fov = Plus::minFov;
+				cg_fov = plus::minFov;
 			}
 
 			if (world) {

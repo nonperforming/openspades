@@ -45,6 +45,8 @@
 #include <Core/Strings.h>
 #include <Core/TMPUtils.h>
 
+#include <Plus/ServerLimits.h>
+
 DEFINE_SPADES_SETTING(cg_unicode, "1");
 //SPADES_SETTING(cg_fov);
 
@@ -459,7 +461,8 @@ namespace spades {
 
 			SPLog("Connection terminated");
 			enet_peer_reset(peer);
-			// FXIME: release peer
+			// FIXME: release peer
+			plus::resetLimits();
 			peer = NULL;
 		}
 
@@ -1123,12 +1126,12 @@ namespace spades {
 				{
 					SPLog("Setting server variable limits");
 					// FIXME: can we collapse this into one line?
-					Plus::minFov = reader.ReadInt();
-					Plus::maxFov = reader.ReadInt();
+					plus::maxFov = reader.ReadInt();
+					plus::minFov = reader.ReadInt();
 					// TODO: Make FOV limit actually limit without modifying config
-					client->ServerSentMessage($"Server requested FOV limit be set to {0}-{0}", Plus::minFov, Plus::maxFov);
-					Plus::fallingBlocks = reader.ReadInt();
-					client->ServerSentMessage($"Server requested falling blocks display be set to {0}", Plus::fallingBlocks);
+					client->ServerSentMessage($"Server requested FOV limit be set to {0}-{0}", plus::minFov, plus::maxFov);
+					plus::fallingBlocks = reader.ReadInt();
+					client->ServerSentMessage($"Server requested falling blocks display be set to {0}", plus::fallingBlocks);
 				} break;
 
 				case PacketTypeStateData:

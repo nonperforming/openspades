@@ -13,7 +13,7 @@ OpenSpades+ is a modification of [OpenSpades](https://github.com/yvt/openspades)
 
 * The [default settings](https://github.com/nonperforming/openspadesplus/blob/main/info/diff.md) falling more towards competitive play
 * No FOV cap (server may limit this)
-* No falling blocks hindering visibility and possibly causing lag spikes (can be toggled)
+* No falling blocks hindering visibility and possibly causing lag spikes (can be toggled, server may limit this)
 * A crosshair more akin to classic FPS games such as CS:GO (seven to pick from currently, feel free to open a PR to add more!)
 * No ragdolls or corpses whatsoever (can be toggled)
 * Hiding the view-model for extra screen space (can be toggled)
