@@ -69,6 +69,10 @@ lastgoodbuild/
 # Bog standard build directory
 build/
 
+# Nix
+/outputs
+/result
+
 # fltk / fluid output leftovers
 Sources/Gui/DetailConfigWindow.txt
 Sources/Gui/MainWindow.txt

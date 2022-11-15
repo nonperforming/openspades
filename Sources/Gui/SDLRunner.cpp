@@ -479,11 +479,8 @@ namespace spades {
 #endif
 				}
 
-				int w = width;
-				int h = height;
-
 				window = SDL_CreateWindow(caption.c_str(), SDL_WINDOWPOS_CENTERED,
-				                          SDL_WINDOWPOS_CENTERED, w, h, sdlFlags);
+				                          SDL_WINDOWPOS_CENTERED, width, height, sdlFlags);
 
 				if (!window) {
 					std::string msg = SDL_GetError();
@@ -521,7 +518,8 @@ namespace spades {
 
 #ifndef __sun
 					if (rtype == RendererType::GL) {
-						if (r_vsync != 0 && SDL_GL_SetSwapInterval(r_vsync) != 0) {
+						int vsync = r_vsync;
+						if (vsync != 0 && SDL_GL_SetSwapInterval(vsync) != 0) {
 							SPRaise("SDL_GL_SetSwapInterval failed: %s", SDL_GetError());
 						}
 					}
