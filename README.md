@@ -1,5 +1,5 @@
 # OpenSpades+
-# Revision 11
+# Revision 12
 
 [![AppVeyor](https://img.shields.io/appveyor/build/nonperforming/openspadesplus?style=flat-square&logo=appveyor&cacheSeconds=60)](https://ci.appveyor.com/project/nonperforming/openspadesplus)
 [![Downloads](https://img.shields.io/github/downloads/nonperforming/openspadesplus/total?color=yellow&style=flat-square)](https://github.com/nonperforming/openspadesplus/releases/latest)
