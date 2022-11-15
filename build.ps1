@@ -43,15 +43,15 @@ function BuildWindows
   }
 
   Write-Host "Configuring build using CMake"
-  try { cmake -A Win32 -D "CMAKE_BUILD_TYPE=MinSizeRel" -D "CMAKE_TOOLCHAIN_FILE=$RepoRoot/vcpkg/scripts/buildsystems/vcpkg.cmake" -D "VCPKG_TARGET_TRIPLET=x86-windows-static" "-S$RepoRoot" "-B$RepoRoot/build" }
+  try { cmake -A Win32 -D "CMAKE_BUILD_TYPE=Release" -D "CMAKE_TOOLCHAIN_FILE=$RepoRoot/vcpkg/scripts/buildsystems/vcpkg.cmake" -D "VCPKG_TARGET_TRIPLET=x86-windows-static" "-S$RepoRoot" "-B$RepoRoot/build" }
   catch { ErrorCMake }
   
   Write-Host "Building $OpenSpadesFlavorName"
-  try { cmake --build "$RepoRoot/build" --config MinSizeRel --parallel 16 }
+  try { cmake --build "$RepoRoot/build" --config Release --parallel 16 }
   catch { throw ErrorBuild } 
   
   Write-Host "Zipping binary"
-  7z a Windows.zip build/bin/MinSizeRel -r
+  7z a Windows.zip build/bin/Release -r
   
   BuildSuccess
 }
@@ -147,7 +147,7 @@ function BuildMacOS
   vcpkg/vcpkg install "@vcpkg_x86_64-darwin.txt"
   
   Write-Host "Configuring using CMake"
-  try { cmake -G Ninja .. -D CMAKE_BUILD_TYPE=MinSizeRel -D CMAKE_OSX_ARCHITECTURES=x86_64 -D CMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake -D VCPKG_TARGET_TRIPLET=x64-osx "-S$RepoRoot" "-B$RepoRoot/build" }
+  try { cmake -G Ninja .. -D CMAKE_BUILD_TYPE=Release -D CMAKE_OSX_ARCHITECTURES=x86_64 -D CMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake -D VCPKG_TARGET_TRIPLET=x64-osx "-S$RepoRoot" "-B$RepoRoot/build" }
   catch { throw "CMake failed" }
   
   Write-Host "Building using Ninja"
