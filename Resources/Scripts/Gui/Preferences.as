@@ -684,7 +684,6 @@ namespace spades {
             
             layouter.AddHeading(_Tr("Preferences", "OpenSpades+"));
             layouter.AddToggleField(_Tr("Preferences", "Viewmodel"), "p_viewmodel");
-            layouter.AddToggleField(_Tr("Preferences", "Show Custom Client Message"), "p_showCustomClientMessage");
             ConfigField @clientField = layouter.AddInputField(
                 _Tr("Preferences", "Custom Client Message"), "p_customClientMessage", not options.GameActive);
             clientField.MaxLength = 100;
@@ -697,6 +696,7 @@ namespace spades {
             layouter.AddToggleField(_Tr("Preferences", "Damage Blood"), "p_hurtBlood");
             layouter.AddToggleField(_Tr("Preferences", "Corpses"), "p_corpse");
             layouter.AddToggleField(_Tr("Preferences", "Palette"), "p_hidePalette");
+            layouter.AddToggleField(_Tr("Preferences", "Falling Blocks"), "p_fallingBlocks");
 
             layouter.AddHeading(_Tr("Preferences", "PubOvl"));
             layouter.AddToggleField(_Tr("Preferences", "Player names"), "po_names");

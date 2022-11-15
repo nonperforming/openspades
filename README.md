@@ -156,12 +156,7 @@ Hides the server IP from cg_stats and sanitises player names (STUB)
 ### p_customClientMessage
 Default: Nothing
 
-Append text to your client info - anything you'd like. `p_showCustomClientMessage` has to be set to `1` for this variable to take effect
-
-### p_showCustomClientMessage
-Default: 0
-
-See `p_customClientMessage`
+Append text to your client info - anything you'd like.
 
 ### p_showAccuracyUnderMap
 Default: 0
@@ -182,6 +177,11 @@ Spawn corpses/ragdolls when a player dies.
 Default: 0
 
 (STUB) Hides the block colo(u)r palette.
+
+### p_fallingBlocks
+Default: 0
+
+Shows falling blocks
 
 ## Other
 ### !!IMPORTANT!!

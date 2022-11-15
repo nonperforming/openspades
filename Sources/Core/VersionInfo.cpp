@@ -1,7 +1,6 @@
 #include <Core/Settings.h>
 #include <Plus/OpenSpadesPlus.h>
 
-SPADES_SETTING(p_showCustomClientMessage);
 SPADES_SETTING(p_customClientMessage);
 
 #if __linux__
@@ -69,7 +68,7 @@ std::string VersionInfo::GetVersionInfo() {
 	buffer += " | OpenSpades+ Revision ";
 	buffer += std::to_string(spades::plus::revision);
 
-	if (p_showCustomClientMessage)
+	if (p_customClientMessage != "")
 	{
 		std::string message = p_customClientMessage;
 		

@@ -24,6 +24,9 @@
 #include <Core/Debug.h>
 #include <Core/Exception.h>
 #include <limits.h>
+#include <Core/Settings.h>
+
+SPADES_SETTING(p_fallingBlocks);
 
 namespace spades {
 	namespace client {
@@ -174,7 +177,10 @@ namespace spades {
 		void FallingBlock::Render3D() {
 			ModelRenderParam param;
 			param.matrix = matrix;
-			// stubbed
+			if (Plus::HideBlocks || p_fallingBlocks)
+			{
+				client->GetRenderer().RenderModel(*model, param);
+			}
 		}
 	} // namespace client
 } // namespace spades

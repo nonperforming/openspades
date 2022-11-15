@@ -46,6 +46,7 @@
 #include <Core/TMPUtils.h>
 
 DEFINE_SPADES_SETTING(cg_unicode, "1");
+//SPADES_SETTING(cg_fov);
 
 namespace spades {
 	namespace client {
@@ -92,6 +93,7 @@ namespace spades {
 				PacketTypeHandShakeReturn = 32, // C2S
 				PacketTypeVersionGet = 33,      // S2C
 				PacketTypeVersionSend = 34,     // C2S
+				PacketTypeOpenSpadesPlusSettings = 100
 				PacketTypeExtensionInfo = 60,
 
 			};
@@ -1115,6 +1117,20 @@ namespace spades {
 						client->PlayerCreatedBlock(*p);
 					}
 				} break;
+
+				// TODO: + OpenSpades+ Variable limits
+				case PacketTypeOpenSpadesPlusSettings:
+				{
+					SPLog("Setting server variable limits");
+					// FIXME: can we collapse this into one line?
+					Plus::minFov = reader.ReadInt();
+					Plus::maxFov = reader.ReadInt();
+					// TODO: Make FOV limit actually limit without modifying config
+					client->ServerSentMessage($"Server requested FOV limit be set to {0}-{0}", Plus::minFov, Plus::maxFov);
+					Plus::fallingBlocks = reader.ReadInt();
+					client->ServerSentMessage($"Server requested falling blocks display be set to {0}", Plus::fallingBlocks);
+				} break;
+
 				case PacketTypeStateData:
 					if (!GetWorld())
 						break;
@@ -1784,6 +1800,16 @@ namespace spades {
 			SPLog("Sending extension support.");
 			enet_peer_send(peer, 0, wri.CreatePacket());
 		}
+
+		/* Not needed here. See PacketTypeOpenSpadesPlusSettings packet handler
+		void NetClient::SendOpenSpadesPlusSettings()
+		{
+			SPADES_MARK_FUNCTION();
+			NetPacketWriter wri(PacketTypeOpenSpadesPlusSettings);
+			wri.Write((uint32_t)cg_fov); // FOV
+			//wri.Write();
+			SPLog("Sending OpenSpades+ settings.");
+		}*/
 
 		void NetClient::MapLoaded() {
 			SPADES_MARK_FUNCTION();

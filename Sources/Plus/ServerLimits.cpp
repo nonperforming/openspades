@@ -19,28 +19,23 @@
 
 */
 
-#include "OpenSpadesPlus.h"
+#include "ServerLimits.h"
 #include <iostream>
 #include <Core/Settings.h>
-
-DEFINE_SPADES_SETTING(p_viewmodel, "0");
-DEFINE_SPADES_SETTING(p_customClientMessage, "");
-DEFINE_SPADES_SETTING(p_showIP, "1");
-DEFINE_SPADES_SETTING(p_showAccuracyInStats, "1");
-DEFINE_SPADES_SETTING(p_showAccuracyUnderMap, "0");
-DEFINE_SPADES_SETTING(p_streamer, "0");
-DEFINE_SPADES_SETTING(p_corpse, "0");
-DEFINE_SPADES_SETTING(p_hidePalette, "0");
-DEFINE_SPADES_SETTING(p_fallingBlocks, "0");
-
-DEFINE_SPADES_SETTING(p_hurtTint, "1");
-DEFINE_SPADES_SETTING(p_hurtBlood, "0");
 
 namespace spades 
 {
 	namespace plus 
 	{
-    	const int revision = 12;
-		
-	} // namespace client
-} // namespace spades
+    	float minFov = -360;
+        float maxFov = 360;
+		int fallingBlocks = 1;
+
+		void resetLimits()
+		{
+			minFov = -360;
+			maxFov = 360;
+			fallingBlocks = 1;
+		}
+	}
+}

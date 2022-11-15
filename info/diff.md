@@ -96,7 +96,6 @@ p_hurtBlood: 0                                                <
 p_hurtTint: 1                                                 <
 p_showAccuracyInStats: 1                                      <
 p_showAccuracyUnderMap: 0                                     <
-p_showCustomClientMessage: 0                                  <
 p_showIP: 1                                                   <
 p_streamer: 0                                                 <
 p_viewmodel: 0                                                <

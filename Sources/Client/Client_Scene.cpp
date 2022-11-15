@@ -144,15 +144,16 @@ namespace spades {
 			def.time = (unsigned int)(time * 1000.f);
 			def.denyCameraBlur = true;
 			def.zFar = 200.f;
-
-			/* Delimit FOV
-			if (!((float)cg_fov < 90.0f)) {
-				cg_fov = 90.0f;
+			
+			// Limit FOV according to server
+			if (!((float)cg_fov < Plus::maxFov)) {
+				// FOV too big
+				cg_fov = Plus::maxFov;
 			}
-			if (!((float)cg_fov > 45.0f)) {
-				cg_fov = 45.0f;
+			if (!((float)cg_fov > Plus::minFov)) {
+				// FOV too small
+				cg_fov = Plus::minFov;
 			}
-			*/
 
 			if (world) {
 				IntVector3 fogColor = world->GetFogColor();

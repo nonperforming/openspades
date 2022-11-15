@@ -21,8 +21,10 @@
 
 #pragma once
 
-namespace spades {
-	namespace plus {
+namespace spades 
+{
+	namespace plus 
+	{
 		extern const int revision;
 	} // namespace client
 } // namespace spades
