@@ -22,13 +22,14 @@
 #include "ServerLimits.h"
 #include <iostream>
 #include <Core/Settings.h>
+#include <Core/Debug.h>
 
 namespace spades 
 {
 	namespace plus 
 	{
-    	float minFov = -360;
-        float maxFov = 360;
+		float minFov = -360;
+		float maxFov = 360;
 		int fallingBlocks = 0;
 
 		void resetLimits()
