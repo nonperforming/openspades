@@ -95,8 +95,8 @@ namespace spades {
 				PacketTypeHandShakeReturn = 32, // C2S
 				PacketTypeVersionGet = 33,      // S2C
 				PacketTypeVersionSend = 34,     // C2S
-				PacketTypeOpenSpadesPlusSettings = 100
 				PacketTypeExtensionInfo = 60,
+				PacketTypeOpenSpadesPlusSettings = 100
 
 			};
 
