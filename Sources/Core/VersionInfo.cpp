@@ -62,7 +62,7 @@ std::string VersionInfo::GetVersionInfo() {
 #elif defined(__HAIKU__)
 	buffer = "Haiku OS";
 #else
-	buffer = "Mac OS"; // I honestly dont know anything else that would fall into Unknown. I do, however, know that on modern macs or something TARGET_OS_MAC supposedly fails or something??? Update libs or something.
+	buffer = "Probably macOS";
 #endif
 
 	buffer += " | OpenSpades+ Revision ";
