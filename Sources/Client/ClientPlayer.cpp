@@ -53,13 +53,12 @@ DEFINE_SPADES_SETTING(cg_animations, "0");
 SPADES_SETTING(cg_shake);
 SPADES_SETTING(r_hdr);
 DEFINE_SPADES_SETTING(cg_environmentalAudio, "1");
-DEFINE_SPADES_SETTING(cg_debugToolSkinAnchors, "0");
-
 DEFINE_SPADES_SETTING(cg_viewWeaponX, "0");
 DEFINE_SPADES_SETTING(cg_viewWeaponY, "0");
 DEFINE_SPADES_SETTING(cg_viewWeaponZ, "0");
+DEFINE_SPADES_SETTING(cg_debugToolSkinAnchors, "0");
+
 SPADES_SETTING(p_viewmodel);
-SPADES_SETTING(p_corpse);
 
 namespace spades {
 	namespace client {
@@ -442,6 +441,23 @@ namespace spades {
 				Vector3 right = player.GetRight();
 				Vector3 up = player.GetUp();
 
+				if (p_viewmodel)
+				{
+					// Offset the view weapon according to the player movement
+					viewWeaponOffset.x += Vector3::Dot(vel, right) * scale;
+					viewWeaponOffset.y -= Vector3::Dot(vel, front) * scale;
+					viewWeaponOffset.z += Vector3::Dot(vel, up) * scale;
+
+					// Offset the view weapon according to the camera movement
+					Vector3 diff = front - lastFront;
+					viewWeaponOffset.x += Vector3::Dot(diff, right) * 0.05f;
+					viewWeaponOffset.z += Vector3::Dot(diff, up) * 0.05f;
+				}
+				else
+				{
+					viewWeaponOffset = Vector3{0.f, -100.f, 0.f} * (1.f - aimDownState); // TODO: incredibly hacky, please fix later
+				}
+
 				lastFront = front;
 
 				if (dt > 0.f)
@@ -717,18 +733,9 @@ namespace spades {
 			}
 
 			// manual adjustment
-			if (!p_viewmodel)
-			{
-				viewWeaponOffset +=
-			  	Vector3{0.f, -100.f, 0.f} * (1.f - aimDownState); // TODO: incredibly hacky, please fix later
-					// TODO: fix
-			}
-			else
-			{
-				viewWeaponOffset +=
-			  	Vector3{cg_viewWeaponX, cg_viewWeaponY, cg_viewWeaponZ} * (1.f - aimDownState);
-			}
-			
+			viewWeaponOffset +=
+			  Vector3{cg_viewWeaponX, cg_viewWeaponY, cg_viewWeaponZ} * (1.f - aimDownState);
+
 			asIScriptObject *skin;
 
 			if (currentTool == Player::ToolSpade) {
@@ -839,16 +846,16 @@ namespace spades {
 			World *world = client.GetWorld();
 
 			if (!p.IsAlive()) {
-				if (!cg_ragdoll) {
+				if (!cg_ragdoll || p_viewmodel ) {
 					ModelRenderParam param;
 					param.matrix = Matrix4::Translate(p.GetOrigin() + MakeVector3(0, 0, 1));
-					if (!p_corpse)
+					if (p_viewmodel)
 					{
-						param.matrix = param.matrix * Matrix4::Scale(0.f); // TODO: incredibly hacky. please fix.
+						param.matrix = param.matrix * Matrix4::Scale(.1f);
 					}
 					else
 					{
-						param.matrix = param.matrix * Matrix4::Scale(.1f);
+						param.matrix = param.matrix * Matrix4::Scale(0.f);
 					}
 					IntVector3 col = p.GetColor();
 					param.customColor = MakeVector3(col.x / 255.f, col.y / 255.f, col.z / 255.f);
@@ -1299,7 +1306,7 @@ namespace spades {
 			Vector3 muzzle = ShouldRenderInThirdPersonView() ? GetMuzzlePosition()
 			                                                 : GetMuzzlePositionInFirstPersonView();
 
-			// make dynamic light
+			// make dlight
 			client.MuzzleFire(muzzle, player.GetFront(), &player == world.GetLocalPlayer());
 
 			if (cg_ejectBrass) {
