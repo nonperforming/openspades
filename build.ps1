@@ -51,7 +51,7 @@ function BuildWindows
   catch { throw ErrorBuild } 
   
   Write-Host "Zipping binary"
-  Compress-Archive -path "C:\projects\openspadesplus\openspadesplus\build\bin\MinSizeRel" -DestinationPath "C:\Windows.zip"
+  Compress-Archive -path "C:\projects\openspadesplus\openspadesplus\build\bin\Release" -DestinationPath "C:\Windows.zip"
   
   BuildSuccess
 }
