@@ -51,7 +51,7 @@ function BuildWindows
   catch { throw ErrorBuild } 
   
   Write-Host "Zipping binary"
-  7z a Windows.zip build/bin/Release -r
+  Compress-Archive -path "C:\projects\openspadesplus\openspadesplus\build\bin\MinSizeRel" -DestinationPath "C:\Windows.zip"
   
   BuildSuccess
 }
@@ -115,10 +115,11 @@ function BuildUbuntu
   try { ninja }
   catch { ErrorBuild }
   
+  cp Resources bin
   Write-Host "Zipping binary"
-  7z a Linux.zip bin -r
+  zip -1 -r Linux.zip bin
   Write-Host "Zipping resources"
-  7z a Resources.zip Resources -r
+  zip -1 -r Resources.zip Resources
   
   BuildSuccess
 }
@@ -154,9 +155,6 @@ function BuildMacOS
   Push-Location build
   try { ninja }
   catch { throw "Build failed" }
-  
-  Write-Host "Zipping binary"
-  7z a MacOS.zip bin/OpenSpades.app -r
   
   BuildSuccess
 }
@@ -273,6 +271,9 @@ elseif ($isLinux)
 elseif ($isMacOS)
 {
   BuildMacOS
+  Push-Location bin
+  Write-Host "Zipping binary"
+  zip -1 -r MacOS.zip OpenSpades.app
 }
 else
 {
