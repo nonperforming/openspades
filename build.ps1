@@ -50,8 +50,9 @@ function BuildWindows
   try { cmake --build "$RepoRoot/build" --config Release --parallel 16 }
   catch { throw ErrorBuild } 
   
-  Write-Host "Zipping binary"
-  Compress-Archive -path "C:\projects\openspadesplus\openspadesplus\build\bin\Release" -DestinationPath "C:\Windows.zip"
+  # STUPID LET APPVEYOR DO THIS
+  #Write-Host "Zipping binary"
+  #Compress-Archive -path "C:\projects\openspadesplus\openspadesplus\build\bin\Release" -DestinationPath "C:\Windows.zip"
   
   BuildSuccess
 }
