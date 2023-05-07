@@ -1,0 +1,9 @@
+freetype:x64-windows-static
+opusfile:x64-windows-static
+opus:x64-windows-static
+libogg:x64-windows-static
+sdl2:x64-windows-static
+libjpeg-turbo:x64-windows-static
+sdl2-image[libjpeg-turbo]:x64-windows-static
+glew:x64-windows-static
+curl:x64-windows-static
