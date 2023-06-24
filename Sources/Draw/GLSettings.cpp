@@ -36,7 +36,7 @@ DEFINE_SPADES_SETTING(r_debugTimingFlush, "0");
 DEFINE_SPADES_SETTING(r_debugTimingFillGap, "0");
 DEFINE_SPADES_SETTING(r_depthOfField, "0");
 DEFINE_SPADES_SETTING(r_depthOfFieldMaxCoc, "0.01");
-DEFINE_SPADES_SETTING(r_depthPrepass, "1");
+DEFINE_SPADES_SETTING(r_depthPrepass, "0");
 DEFINE_SPADES_SETTING(r_dlights, "0");
 DEFINE_SPADES_SETTING(r_exposureValue, "0");
 DEFINE_SPADES_SETTING(r_fogShadow, "0");
