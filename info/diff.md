@@ -143,7 +143,7 @@ r_renderer: gl                                                  r_renderer: gl
 r_saturation: 1                                                 r_saturation: 1
 r_scale: 1                                                      r_scale: 1
 r_scaleFilter: 1                                                r_scaleFilter: 1
-r_shadowMapSize: 2048                                           r_shadowMapSize: 2048
+r_shadowMapSize: 32                                           | r_shadowMapSize: 2048
 r_sharpen: 0                                                  | r_sharpen: 1
 r_softParticles: 0                                            | r_softParticles: 1
 r_sparseShadowMaps: 1                                           r_sparseShadowMaps: 1

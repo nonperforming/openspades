@@ -61,7 +61,7 @@ DEFINE_SPADES_SETTING(r_radiosity, "0");
 DEFINE_SPADES_SETTING(r_saturation, "1");
 DEFINE_SPADES_SETTING(r_scale, "1");
 DEFINE_SPADES_SETTING(r_scaleFilter, "1");
-DEFINE_SPADES_SETTING(r_shadowMapSize, "2048");
+DEFINE_SPADES_SETTING(r_shadowMapSize, "32");
 DEFINE_SPADES_SETTING(r_sharpen, "0");
 DEFINE_SPADES_SETTING(r_softParticles, "0");
 DEFINE_SPADES_SETTING(r_sparseShadowMaps, "1");
